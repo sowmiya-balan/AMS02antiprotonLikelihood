@@ -5,7 +5,9 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import gc
 import numpy as np
-from tensorflow import keras
+import tensorflow as tf
+for gpu in tf.config.experimental.list_physical_devices('GPU'):
+    tf.config.experimental.set_memory_growth(gpu, True)
 from iminuit import Minuit
 import sys
 print("\033[32m Imported required python modules - gc, numpy, tensorflow, iminuit.Minuit")

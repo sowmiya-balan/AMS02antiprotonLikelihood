@@ -142,11 +142,11 @@ class DRNet:
         # E_dmnet - (n,40) array of kinetic energy(KE) per nucleon values at which network predicts output
         E_dmnet = x*self.DM_mass[:,None]
         # y_DM_x - (n,40) array of y values predicted by the DMNet for different x values; y(x) = log10(m^3 x phi(E))        
-        # DM_model = keras.models.load_model(self.DM_model)
-        DM_model = keras.models.load_model(self.dep_path + 'DM_model_x.h5')
+        # DM_model = tf.keras.models.load_model(self.DM_model)
+        DM_model = tf.keras.models.load_model(self.dep_path + 'DM_model_x.h5')
         y_DM_x = DM_model([self.m_DM,self.bf,pp])
         # Releasing memory
-        keras.backend.clear_session()
+        tf.keras.backend.clear_session()
         del DM_model    
         gc.collect()
         # phi_dmnet - (n,40) array of flux values predicted by the DMNet for different KE per nucleon values
@@ -172,11 +172,11 @@ class DRNet:
         # Preprocessing propagation parameters
         pp = (( self.pp - (self.S_trafos[0])[:11])/(self.S_trafos[1])[:11])
         # y_CR - (28,) array of y values predicted by the sNet at different KE per nucleon values in E_drn ; y(E) = log10(E^2.7 phi(E))
-        # S_model = keras.models.load_model(self.S_model)
-        S_model =keras.models.load_model(self.dep_path + 'S_model.h5')
+        # S_model = tf.keras.models.load_model(self.S_model)
+        S_model =tf.keras.models.load_model(self.dep_path + 'S_model.h5')
         y_CR = S_model(pp)
         # Releasing memory
-        keras.backend.clear_session()
+        tf.keras.backend.clear_session()
         del S_model
         gc.collect()
         # phi_CR_LIS - (28,) array of flux values predicted by the sNet at different KE per nucleon values in E_drn
