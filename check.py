@@ -27,9 +27,10 @@ prevent_extrapolation = False
 # del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR)
 # print("del_chi2 = ",del_chi2)
 print('Calling pbarlike...')
-del_chi = py_pbarlike(m_DM, bf, sigma_v = sv,propagation_model=pm)
+del_chi,delchi_cov = py_pbarlike(m_DM, bf,pp_db)
 # del(keras)
 print('del_chi2 = ', del_chi)
+print('del_chi_cov = ', delchi_cov)
 #%%
 
 

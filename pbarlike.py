@@ -33,25 +33,29 @@ def DRN_initialization(propagation_parameters,propagation_model='DIFF.BRK', prev
     # print('\nPropagation model: ',DRN.propagation_model)
     return DRN
     
-def py_pbar_logLike_DRN(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
+def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     bf = br_fr(brfr,sigma_v)
     DRN.preprocessing_DMparams(DM_mass, bf, sigma_v)
     # print('Normalized branching fractions: ',DRN.bf)
     # print('\n Rescaled cross-section: ', DRN.sv)
     phi_CR_LIS, phi_DM_LIS = DRN.LIS_sim()
     phi_CR, phi_DMCR = DRN.TOA_sim(phi_CR_LIS, phi_DM_LIS)
-    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR)
-    return del_chi2
+    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR,'uncorrelated' )
+    del_chi2_cov = DRN.del_chi2(phi_CR, phi_DMCR,'correlated' )
+    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_cov}
+    return result
 
-def py_pbarlike(DM_mass, brfr, sigma_v = 10**(-25.5228), propagation_model='DIFF.BRK', propagation_parameters = None, prevent_extrapolation = False):
-    DRN = DRNet(propagation_model,prevent_extrapolation)
-    DRN.preprocessing(DM_mass, brfr, sigma_v, propagation_parameters)
+def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False):
+    propagation_parameters = np.array(propagation_parameters)
+    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation)
+    DRN.preprocessing_DMparams(DM_mass, brfr, sigma_v)
     print('Normalized branching fractions: ',DRN.bf)
     print('\nPropagation model: ',DRN.propagation_model)
     phi_CR_LIS, phi_DM_LIS = DRN.LIS_sim()
     phi_CR, phi_DMCR = DRN.TOA_sim(phi_CR_LIS, phi_DM_LIS)
-    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR)
-    return del_chi2
+    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR, "chi2")
+    del_chi2_cov = DRN.del_chi2(phi_CR, phi_DMCR, "chi2_cov")
+    return del_chi2, del_chi2_cov
     
 # def pbar_flux(DM_masses,sigma_v,br_fr,propagation_model,propagation_parameters,marginalization):
 #     DRN = DRNet(propagation_model,propagation_parameters,marginalization)

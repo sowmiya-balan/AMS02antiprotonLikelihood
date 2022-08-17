@@ -49,6 +49,9 @@ R_ams = (ams_data[:,0]+ams_data[:,1])/2
 phi_in_R = ams_data[:,10] * ams_data[:,13]
 error_R_ams = np.sqrt(ams_data[:,11]**2+ams_data[:,12]**2)*ams_data[:,13]
 
+# Loading ams02 covariance matrix (58,58) for the 7-year antiproton data:
+ams_cov = np.genfromtxt(script_directory+'/dependencies/covariance_pbar_AMS.dat')
+
 # R - array with rigidity values in GV; outputs array of E_k in GeV
 def R_to_Ekin(R,z = -1, A = 1, m = m_p ):
     Z = np.abs(z)

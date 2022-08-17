@@ -196,6 +196,11 @@ class DRNet:
     # Calculates chi2 using ams data, ams errors and predicted flux
     def chi2(self,phi_pred):
         return np.sum((phi_ams - phi_pred)**2 / error_ams**2,axis = -1)
+
+    # Calculates chi2 using ams data, covariane matrix and predicted flux
+    def chi2_cov(self,phi_pred):
+        return (phi_ams - phi_pred) @ ams_cov @ (phi_ams - phi_pred).T
+
     
     # Applying solar modulation to flux predicted at the local interstellar medium
     def solar_mod(self,phi_LIS, V, Z=-1., A=1., m=m_p ):
@@ -280,13 +285,16 @@ class DRNet:
         phi_DMCR = self.solar_modulation(phi_LIS) 
         return self.phi_CR, phi_DMCR
     
-    def del_chi2(self,phi_CR, phi_DMCR):
-        chi2_CR = self.chi2(phi_CR)
-        chi2_DMCR = self.chi2(phi_DMCR)
+    def del_chi2(self,phi_CR, phi_DMCR,correlation):
+        chi2_options = {'uncorrelated':self.chi2, 'correlated' : self.chi2_cov}
+        chi2_CR = chi2_options[correlation](phi_CR)
+        chi2_DMCR = chi2_options[correlation](phi_DMCR)
         Delta_chi2 = np.clip(chi2_CR - chi2_DMCR,  -500,500)
         # print("Delta_chi2:",Delta_chi2)
         del_chi2 = np.log( 1/len(self.pp) * np.sum(np.exp(Delta_chi2/2),axis=-1) )
         return del_chi2
+
+    
 
 
 
