@@ -21,6 +21,10 @@ class DRNet:
         self.preprocessing_prop_params(propagation_parameters)
         self.phi_CR_LIS = self.CR_sim()
         self.phi_CR   = self.solar_modulation(self.phi_CR_LIS) 
+        self.chi2_CR_uncorr = self.chi2(self.phi_CR)
+        self.chi2_CR_corr = self.chi2_cov(self.phi_CR)
+        self.chi2_CR_diff = np.clip(self.chi2_CR_uncorr - self.chi2_CR_corr,  -500,500)
+        self.CR_marginalized_likelihood = np.sum(np.exp(self.chi2_CR_diff/2),axis=-1)
         print('\n The simulation tool has been initiated. \n')
 
     def load_deps(self):
@@ -191,7 +195,7 @@ class DRNet:
             DRN_output = self.DM_sim()
             phi_DM_LIS = self.sv[:,None]/10**(-25.5228)*DRN_output
             # Outputs 2D phi_DM_LIS - (n,28) array of flux values interpolated to obtain fluxes at the same KE per nucleon values as in E_drn
-        return self.phi_CR_LIS, phi_DM_LIS
+        return phi_DM_LIS
 
     # Calculates chi2 using ams data, ams errors and predicted flux
     def chi2(self,phi_pred):
@@ -280,21 +284,25 @@ class DRNet:
             return np.array([self.nuisance_estimation_brk(phi_LIS[i]) for i in range(len(phi_LIS))])
             # return np.array([self.solar_mod(phi_LIS[i],0.6028438883928189) for i in range(len(phi_LIS))])
 
-    def TOA_sim(self, phi_CR_LIS, phi_DM_LIS):
-        phi_LIS = phi_CR_LIS + phi_DM_LIS
+    def TOA_sim(self, phi_DM_LIS):
+        phi_LIS = self.phi_CR_LIS + phi_DM_LIS
         phi_DMCR = self.solar_modulation(phi_LIS) 
-        return self.phi_CR, phi_DMCR
+        return phi_DMCR
     
-    def del_chi2(self,phi_CR, phi_DMCR,correlation):
-        chi2_options = {'uncorrelated':self.chi2, 'correlated' : self.chi2_cov}
-        chi2_CR = chi2_options[correlation](phi_CR)
-        chi2_DMCR = chi2_options[correlation](phi_DMCR)
-        Delta_chi2 = np.clip(chi2_CR - chi2_DMCR,  -500,500)
+    def del_chi2(self, phi_DMCR):
+        # chi2_options = {'uncorrelated':self.chi2, 'correlated' : self.chi2_cov}
+        chi2_DMCR = self.chi2(phi_DMCR)
+        chi2_diff = np.clip(self.chi2_CR_uncorr - chi2_DMCR,  -500,500)
         # print("Delta_chi2:",Delta_chi2)
-        del_chi2 = np.log( 1/len(self.pp) * np.sum(np.exp(Delta_chi2/2),axis=-1) )
+        del_chi2 = np.log( 1/len(self.pp) * np.sum(np.exp(chi2_diff/2),axis=-1) )
         return del_chi2
 
-    
+    def del_chi2_corr(self, phi_DMCR):
+        chi2_DMCR = self.chi2_cov(phi_DMCR)   
+        chi2_DM_diff = np.clip(self.chi2_CR_uncorr - chi2_DMCR,  -500,500)
+        delta_chi2 = np.log(np.sum(np.exp(chi2_DM_diff/2),axis=-1) / self.CR_marginalized_likelihood)
+        return delta_chi2
+
 
 
 

@@ -38,11 +38,11 @@ def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     DRN.preprocessing_DMparams(DM_mass, bf, sigma_v)
     # print('Normalized branching fractions: ',DRN.bf)
     # print('\n Rescaled cross-section: ', DRN.sv)
-    phi_CR_LIS, phi_DM_LIS = DRN.LIS_sim()
-    phi_CR, phi_DMCR = DRN.TOA_sim(phi_CR_LIS, phi_DM_LIS)
-    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR,'uncorrelated' )
-    del_chi2_cov = DRN.del_chi2(phi_CR, phi_DMCR,'correlated' )
-    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_cov}
+    phi_DM_LIS = DRN.LIS_sim()
+    phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
+    del_chi2 = DRN.del_chi2(phi_DMCR)
+    del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
+    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
     return result
 
 def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False):
@@ -53,8 +53,8 @@ def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),p
     print('\nPropagation model: ',DRN.propagation_model)
     phi_CR_LIS, phi_DM_LIS = DRN.LIS_sim()
     phi_CR, phi_DMCR = DRN.TOA_sim(phi_CR_LIS, phi_DM_LIS)
-    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR, "chi2")
-    del_chi2_cov = DRN.del_chi2(phi_CR, phi_DMCR, "chi2_cov")
+    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR, 'uncorrelated')
+    del_chi2_cov = DRN.del_chi2(phi_CR, phi_DMCR, 'correlated')
     return del_chi2, del_chi2_cov
     
 # def pbar_flux(DM_masses,sigma_v,br_fr,propagation_model,propagation_parameters,marginalization):
