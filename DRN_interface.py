@@ -203,7 +203,7 @@ class DRNet:
 
     # Calculates chi2 using ams data, covariane matrix and predicted flux
     def chi2_cov(self,phi_pred):
-        return (phi_ams - phi_pred) @ ams_cov @ (phi_ams - phi_pred).T
+        return (phi_ams - phi_pred) @ ams_cov.I @ (phi_ams - phi_pred).T
 
     
     # Applying solar modulation to flux predicted at the local interstellar medium
