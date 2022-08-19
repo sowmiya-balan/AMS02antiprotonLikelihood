@@ -42,7 +42,7 @@ def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
     del_chi2 = DRN.del_chi2(phi_DMCR)
     del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
-    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
+    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr[0]}
     return result
 
 def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False):
