@@ -52,7 +52,7 @@ class DRNet:
         self.maxs_pp = maxs_pp[self.propagation_model]
         # Loading multinest sample for the corresponding diffusion model
         self.mns = (np.genfromtxt(self.dep_path + 'multinest_sample.dat'))
-        self.mnpp = self.mns[100:102,:self.N_pp]
+        self.mnpp = self.mns[:,:self.N_pp]
 
     # propagation_parameters - (n,N_pp) shaped array if flux is predicted for n DM_masses
     def preprocessing_prop_params(self, propagation_parameters):
