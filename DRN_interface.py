@@ -230,20 +230,36 @@ class DRNet:
             chi2_temp = self.chi2(phi_pred)
             return chi2_temp
         
+        # # Initiating whatever to minimize the chi squared function
+        # profiling = Minuit. from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
+        #                                     start = np.array([0.6, 1]), # starting values for the parameters to be estimated
+        #                                     error = np.array([0.001, 0.001]), # step sizes for gradient descent for each of the parameters
+        #                                     limit = np.array([[0.2, 0.9], [0.1, 5]]), # allowed interval for the parameters
+        #                                     #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
+        #                                     errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
+        
+        # # migrad - algorithm for gradient descent (?)
+        # profiling.migrad()
+        # # V_profiled,A-profiled - values of estimated parameters
+        # V_profiled,A_profiled = profiling.np_values()
+        # return self.solar_mod(phi_LIS*A_profiled, V_profiled)
+        # # Outputs V_profiled,A-profiled - values of estimated parameters
+
         # Initiating whatever to minimize the chi squared function
-        profiling = Minuit. from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
-                                            start = np.array([0.6, 1]), # starting values for the parameters to be estimated
-                                            error = np.array([0.001, 0.001]), # step sizes for gradient descent for each of the parameters
-                                            limit = np.array([[0.2, 0.9], [0.1, 5]]), # allowed interval for the parameters
-                                            #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
-                                            errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
+        profiling = Minuit(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
+                            V = 0.6 , A = 1) # starting values for the parameters to be estimated
+        profiling.errors ["V"] = 0.001 # step sizes for gradient descent for each of the parameters
+        profiling.errors ["A"] = 0.001
+        profiling.limits["V"] = (0.2,0.9) # allowed interval for the parameters
+        profiling.limits["A"] = (0.1, 5)
+        profiling.errordef = 0.5 # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function                                           
         
         # migrad - algorithm for gradient descent (?)
         profiling.migrad()
         # V_profiled,A-profiled - values of estimated parameters
-        V_profiled,A_profiled = profiling.np_values()
+        V_profiled = profiling.values["V"]
+        A_profiled = profiling.values["A"]
         return self.solar_mod(phi_LIS*A_profiled, V_profiled)
-        # Outputs V_profiled,A-profiled - values of estimated parameters
 
     def nuisance_estimation_brk(self,phi_LIS):
         # Defining the function to be minimized to profile the nuisance parameters
@@ -255,18 +271,30 @@ class DRNet:
             chi2_temp = self.chi2(phi_pred)
             return chi2_temp
         
+        # # Initiating whatever to minimize the chi squared function
+        # profiling = Minuit.from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
+        #                                     start = np.array([0.6]), # starting values for the parameters to be estimated
+        #                                     error = np.array([0.001]), # step sizes for gradient descent for each of the parameters
+        #                                     limit = np.array([[0.2, 0.9]]), # allowed interval for the parameters
+        #                                     #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
+        #                                     errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
+        
+        # # migrad - algorithm for gradient descent (?)
+        # profiling.migrad()
+        # # V_profiled,A-profiled - values of estimated parameters
+        # V_profiled = profiling.np_values()
+
         # Initiating whatever to minimize the chi squared function
-        profiling = Minuit. from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
-                                            start = np.array([0.6]), # starting values for the parameters to be estimated
-                                            error = np.array([0.001]), # step sizes for gradient descent for each of the parameters
-                                            limit = np.array([[0.2, 0.9]]), # allowed interval for the parameters
-                                            #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
-                                            errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
+        profiling = Minuit(fcn = lsq , #grad = jax.grad(lsq), # lsq - function to be minimized
+                            V = np.array([0.6])) # starting values for the parameters to be estimated
+        profiling.errors = 0.001 # step sizes for gradient descent for each of the parameters
+        profiling.limits["V"] =  (0.2,0.9) # allowed interval for the parameters
+        profiling.errordef = 0.5 # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
         
         # migrad - algorithm for gradient descent (?)
         profiling.migrad()
         # V_profiled,A-profiled - values of estimated parameters
-        V_profiled = profiling.np_values()
+        V_profiled = profiling.values
         # print(V_profiled)
         return self.solar_mod(phi_LIS, V_profiled)
         # Outputs V_profiled,A-profiled - values of estimated parameters

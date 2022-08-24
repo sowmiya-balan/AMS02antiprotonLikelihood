@@ -51,11 +51,12 @@ def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),p
     DRN.preprocessing_DMparams(DM_mass, brfr, sigma_v)
     print('Normalized branching fractions: ',DRN.bf)
     print('\nPropagation model: ',DRN.propagation_model)
-    phi_CR_LIS, phi_DM_LIS = DRN.LIS_sim()
-    phi_CR, phi_DMCR = DRN.TOA_sim(phi_CR_LIS, phi_DM_LIS)
-    del_chi2 = DRN.del_chi2(phi_CR, phi_DMCR, 'uncorrelated')
-    del_chi2_cov = DRN.del_chi2(phi_CR, phi_DMCR, 'correlated')
-    return del_chi2, del_chi2_cov
+    phi_DM_LIS = DRN.LIS_sim()
+    phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
+    del_chi2 = DRN.del_chi2(phi_DMCR)
+    del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
+    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr[0]}
+    return result
     
 # def pbar_flux(DM_masses,sigma_v,br_fr,propagation_model,propagation_parameters,marginalization):
 #     DRN = DRNet(propagation_model,propagation_parameters,marginalization)
