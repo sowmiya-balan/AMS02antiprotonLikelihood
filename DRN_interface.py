@@ -52,7 +52,7 @@ class DRNet:
         self.maxs_pp = maxs_pp[self.propagation_model]
         # Loading multinest sample for the corresponding diffusion model
         self.mns = (np.genfromtxt(self.dep_path + 'multinest_sample.dat'))
-        self.mnpp = self.mns[:,:self.N_pp]
+        self.mnpp = self.mns[100:102,:self.N_pp]
 
     # propagation_parameters - (n,N_pp) shaped array if flux is predicted for n DM_masses
     def preprocessing_prop_params(self, propagation_parameters):
@@ -219,11 +219,11 @@ class DRNet:
 
     def nuisance_estimation(self,phi_LIS):
         # Defining the function to be minimized to profile the nuisance parameters
-        def lsq(nuisance_parameters):
-            # V - solar modulation potential
-            V = nuisance_parameters[0]
-            # A - normalization constant
-            A = nuisance_parameters[1]
+        def lsq(V,A):
+            # # V - solar modulation potential
+            # V = nuisance_parameters[0]
+            # # A - normalization constant
+            # A = nuisance_parameters[1]
             # phi_pred - (1,58) array containing values of normalized, solar modulated flux values 
             phi_pred = self.solar_mod(phi_LIS*A, V )
             # chi2_temp - a scalar value of weighted sum of squared difference between the normalized, solar modulated flux and flux measured by AMS02
@@ -247,7 +247,8 @@ class DRNet:
 
         # Initiating whatever to minimize the chi squared function
         profiling = Minuit(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
-                            V = 0.6 , A = 1) # starting values for the parameters to be estimated
+                            V = 0.6,A = 1) # starting values for the parameters to be estimated
+                            
         profiling.errors ["V"] = 0.001 # step sizes for gradient descent for each of the parameters
         profiling.errors ["A"] = 0.001
         profiling.limits["V"] = (0.2,0.9) # allowed interval for the parameters
