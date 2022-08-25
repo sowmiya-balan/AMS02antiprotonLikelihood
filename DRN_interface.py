@@ -302,7 +302,7 @@ class DRNet:
     def solar_mod_brk(self, phi_LIS):
         phi = {'DIFF.BRK': 12, 'INJ.BRK+vA': 14}
         delta_phi_bar = {'DIFF.BRK': 13, 'INJ.BRK+vA': 15}
-        V = self.mns[100:102,phi[self.propagation_model]] + self.mns[100:102,delta_phi_bar[self.propagation_model]]
+        V = self.mns[:,phi[self.propagation_model]] + self.mns[:,delta_phi_bar[self.propagation_model]]
         if self.marginalization:
             return np.array([self.solar_mod(phi_LIS[i],V[i]) for i in range(len(phi_LIS))])
         else:
