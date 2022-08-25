@@ -1,7 +1,7 @@
-#%%
+#%% Imports
 from preamble import *
 
-#%% Helper functions
+#%% DRN class
 
 class DRNet:
     def __init__(self,propagation_parameters,propagation_model,prevent_extrapolation):
@@ -52,14 +52,13 @@ class DRNet:
         self.maxs_pp = maxs_pp[self.propagation_model]
         # Loading multinest sample for the corresponding diffusion model
         self.mns = (np.genfromtxt(self.dep_path + 'multinest_sample.dat'))
-        self.mnpp = self.mns[100:102,:self.N_pp]
+        self.mnpp = self.mns[:,:self.N_pp]
 
     # propagation_parameters - (n,N_pp) shaped array if flux is predicted for n DM_masses
     def preprocessing_prop_params(self, propagation_parameters):
         # Converting propagation parameters to 2D array. Required transformations will be done within simulations (DM_sim, CR_sim)
         if propagation_parameters.ndim == 1:
             propagation_parameters = propagation_parameters[np.newaxis,:]
-
         # Checking if given propagation parameters are custom or dummy
         if propagation_parameters.all == 0 : 
             self.pp = self.mnpp   
@@ -81,9 +80,6 @@ class DRNet:
             self.pp = propagation_parameters
             self.marginalization = False               
         
-        
-   
-
     # DM_masses - 1D array of shape (n,)
     def preprocessing_DMparams(self, DM_mass, br_fr, sigma_v):
         # Preparing DM masses
@@ -219,48 +215,48 @@ class DRNet:
 
     def nuisance_estimation(self,phi_LIS):
         # Defining the function to be minimized to profile the nuisance parameters
-        def lsq(V,A):
+        def lsq(nuisance_parameters):
             # # V - solar modulation potential
-            # V = nuisance_parameters[0]
+            V = nuisance_parameters[0]
             # # A - normalization constant
-            # A = nuisance_parameters[1]
+            A = nuisance_parameters[1]
             # phi_pred - (1,58) array containing values of normalized, solar modulated flux values 
             phi_pred = self.solar_mod(phi_LIS*A, V )
             # chi2_temp - a scalar value of weighted sum of squared difference between the normalized, solar modulated flux and flux measured by AMS02
             chi2_temp = self.chi2(phi_pred)
             return chi2_temp
         
-        # # Initiating whatever to minimize the chi squared function
-        # profiling = Minuit. from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
-        #                                     start = np.array([0.6, 1]), # starting values for the parameters to be estimated
-        #                                     error = np.array([0.001, 0.001]), # step sizes for gradient descent for each of the parameters
-        #                                     limit = np.array([[0.2, 0.9], [0.1, 5]]), # allowed interval for the parameters
-        #                                     #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
-        #                                     errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
-        
-        # # migrad - algorithm for gradient descent (?)
-        # profiling.migrad()
-        # # V_profiled,A-profiled - values of estimated parameters
-        # V_profiled,A_profiled = profiling.np_values()
-        # return self.solar_mod(phi_LIS*A_profiled, V_profiled)
-        # # Outputs V_profiled,A-profiled - values of estimated parameters
-
-        # Initiating whatever to minimize the chi squared function
-        profiling = Minuit(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
-                            V = 0.6,A = 1) # starting values for the parameters to be estimated
-                            
-        profiling.errors ["V"] = 0.001 # step sizes for gradient descent for each of the parameters
-        profiling.errors ["A"] = 0.001
-        profiling.limits["V"] = (0.2,0.9) # allowed interval for the parameters
-        profiling.limits["A"] = (0.1, 5)
-        profiling.errordef = 0.5 # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function                                           
+        # Initiating whatever to minimize the chi squared function (iminuit<2)
+        profiling = Minuit. from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
+                                            start = np.array([0.6, 1]), # starting values for the parameters to be estimated
+                                            error = np.array([0.001, 0.001]), # step sizes for gradient descent for each of the parameters
+                                            limit = np.array([[0.2, 0.9], [0.1, 5]]), # allowed interval for the parameters
+                                            #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
+                                            errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
         
         # migrad - algorithm for gradient descent (?)
         profiling.migrad()
         # V_profiled,A-profiled - values of estimated parameters
-        V_profiled = profiling.values["V"]
-        A_profiled = profiling.values["A"]
+        V_profiled,A_profiled = profiling.np_values()
         return self.solar_mod(phi_LIS*A_profiled, V_profiled)
+        # Outputs V_profiled,A-profiled - values of estimated parameters
+
+        # # Initiating whatever to minimize the chi squared function (iminuit>2)
+        # profiling = Minuit(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
+        #                     V = 0.6,A = 1) # starting values for the parameters to be estimated
+                            
+        # profiling.errors ["V"] = 0.001 # step sizes for gradient descent for each of the parameters
+        # profiling.errors ["A"] = 0.001
+        # profiling.limits["V"] = (0.2,0.9) # allowed interval for the parameters
+        # profiling.limits["A"] = (0.1, 5)
+        # profiling.errordef = 0.5 # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function                                           
+        
+        # # migrad - algorithm for gradient descent (?)
+        # profiling.migrad()
+        # # V_profiled,A-profiled - values of estimated parameters
+        # V_profiled = profiling.values["V"]
+        # A_profiled = profiling.values["A"]
+        # return self.solar_mod(phi_LIS*A_profiled, V_profiled)
 
     def nuisance_estimation_brk(self,phi_LIS):
         # Defining the function to be minimized to profile the nuisance parameters
@@ -272,31 +268,31 @@ class DRNet:
             chi2_temp = self.chi2(phi_pred)
             return chi2_temp
         
-        # # Initiating whatever to minimize the chi squared function
-        # profiling = Minuit.from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
-        #                                     start = np.array([0.6]), # starting values for the parameters to be estimated
-        #                                     error = np.array([0.001]), # step sizes for gradient descent for each of the parameters
-        #                                     limit = np.array([[0.2, 0.9]]), # allowed interval for the parameters
-        #                                     #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
-        #                                     errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
-        
-        # # migrad - algorithm for gradient descent (?)
-        # profiling.migrad()
-        # # V_profiled,A-profiled - values of estimated parameters
-        # V_profiled = profiling.np_values()
-
-        # Initiating whatever to minimize the chi squared function
-        profiling = Minuit(fcn = lsq , #grad = jax.grad(lsq), # lsq - function to be minimized
-                            V = np.array([0.6])) # starting values for the parameters to be estimated
-        profiling.errors = 0.001 # step sizes for gradient descent for each of the parameters
-        profiling.limits["V"] =  (0.2,0.9) # allowed interval for the parameters
-        profiling.errordef = 0.5 # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
+        # Initiating whatever to minimize the chi squared function (iminuit<2)
+        profiling = Minuit.from_array_func(fcn   = lsq ,#grad = jax.grad(lsq), # lsq - function to be minimized
+                                            start = np.array([0.6]), # starting values for the parameters to be estimated
+                                            error = np.array([0.001]), # step sizes for gradient descent for each of the parameters
+                                            limit = np.array([[0.2, 0.9]]), # allowed interval for the parameters
+                                            #name  = np.array(['phi_AMS-02_pbar', 'norm_AMS-02_pbar']), 
+                                            errordef=1) # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
         
         # migrad - algorithm for gradient descent (?)
         profiling.migrad()
         # V_profiled,A-profiled - values of estimated parameters
-        V_profiled = profiling.values
-        # print(V_profiled)
+        V_profiled = profiling.np_values()
+
+        # # Initiating whatever to minimize the chi squared function (iminuit>2)
+        # profiling = Minuit(fcn = lsq , #grad = jax.grad(lsq), # lsq - function to be minimized
+        #                     V = np.array([0.6])) # starting values for the parameters to be estimated
+        # profiling.errors = 0.001 # step sizes for gradient descent for each of the parameters
+        # profiling.limits["V"] =  (0.2,0.9) # allowed interval for the parameters
+        # profiling.errordef = 0.5 # errordef = 1 for Least squares function; errordef = 0.5 for maximum likelihood function
+        
+        # # migrad - algorithm for gradient descent (?)
+        # profiling.migrad()
+        # # V_profiled,A-profiled - values of estimated parameters
+        # V_profiled = profiling.values
+        # # print(V_profiled)
         return self.solar_mod(phi_LIS, V_profiled)
         # Outputs V_profiled,A-profiled - values of estimated parameters
     
@@ -311,7 +307,6 @@ class DRNet:
             return np.array([self.solar_mod(phi_LIS[i],V[i]) for i in range(len(phi_LIS))])
         else:
             return np.array([self.nuisance_estimation_brk(phi_LIS[i]) for i in range(len(phi_LIS))])
-            # return np.array([self.solar_mod(phi_LIS[i],0.6028438883928189) for i in range(len(phi_LIS))])
 
     def TOA_sim(self, phi_DM_LIS):
         phi_LIS = self.phi_CR_LIS + phi_DM_LIS
@@ -319,10 +314,8 @@ class DRNet:
         return phi_DMCR
     
     def del_chi2(self, phi_DMCR):
-        # chi2_options = {'uncorrelated':self.chi2, 'correlated' : self.chi2_cov}
         chi2_DMCR = self.chi2(phi_DMCR)
         chi2_diff = np.clip(self.chi2_CR_uncorr - chi2_DMCR,  -500,500)
-        # print("Delta_chi2:",Delta_chi2)
         del_chi2 = np.log( 1/len(self.pp) * np.sum(np.exp(chi2_diff/2),axis=-1) )
         return del_chi2
 
@@ -332,66 +325,8 @@ class DRNet:
         delta_chi2 = np.log(np.sum(np.exp(chi2_DM_diff/2),axis=-1) / self.CR_marginalized_likelihood)
         return delta_chi2
 
-
-
-
-
-
-
-
-
-    # # theta_prop - (number_of_m_DM,11) array containing generally accepteed values of propagation parameters 
+    # # theta_prop - (number_of_m_DM,11) array containing generally accepteed values of propagation parameters for run1
     # def usual_theta_prop(number_of_m_DM,gamma_1p = 1.80, gamma_1 = 1.79, gamma_2p = 2.405, gamma_2 = 2.357, R_0 = 7.92e3, s = 0.37, D_0 = 2.05e28, delta = 0.419, v_alfven = 8.84, v_0c = 0.09, z_h = 2.60):
     #     theta_prop_temp = np.array([gamma_1p, gamma_1, gamma_2p, gamma_2, R_0, s, D_0, delta, v_alfven, v_0c, z_h])
     #     theta_prop = np.repeat([theta_prop_temp],number_of_m_DM,axis=0)
     #     return theta_prop 
-
-    
-
-    # # Check if given parameters are outside trained regions of the network
-    
-    # def outside_comfort_zone_DM(self,DM_masses):
-    #     stop_DM = False
-    #     #Checking DM parameters
-    #     if np.min(DM_masses) < 5 or np.max(DM_masses) > 5e3:
-    #         print('\n At least one of the given DM masses is outside of the provided range (5 GeV to 5 TeV). DM antiproton flux cannot be predicted.')
-    #         stop_DM = True
-    #     return stop_DM
-
-    # def outside_comfort_zone_CR(self,propagation_parameters):
-    #     stop_CR = False
-    #     if propagation_parameters.shape[-1] != self.N_pp:
-    #         raise ValueError('The number of propagation parameters is not consistent with the propagation model.')       
-    #     #Checking propagation parameters
-    #     strings = {'run1' : ['gamma 1,p', 'gamma 1', 'gamma 2,p', 'gamma 2', 'R_0', 's_0', 'D_0', 'delta', 'v_Alfven', 'v_0,c', 'z_h'],
-    #                'DIFF.BRK' : ['gamma 2,p', 'gamma 2', 'D0xx', 'delta_l', 'delta', 'delta_h - delta', 'R_D0', 's_D', 'R_D1', 'v_0'],
-    #                'INJ.BRK+vA': ['gamma 1,p', 'gamma 1', 'R_0,inj', 's', 'gamma 2,p', 'gamma 2', 'D_0', 'delta', 'delta_h - delta', 'R_1D', 'v_0', 'v_Alfven']} # TO DO: add
-    #     for i in range(self.N_pp):
-    #         if np.min(propagation_parameters[:, i]) <= self.mins_pp[i] or np.max(propagation_parameters[:, i]) >= self.maxs_pp[i]:
-    #             print("At least one of the inputs for %s is outside the trained parameter ranges. No output will be given." % (strings[self.propagation_model])[i])
-    #             print(np.min(self.pp[:, i]),np.max(self.pp[:, i]))
-    #             stop_CR = True
-    #             break
-    #     return stop_CR
-
-    # #br_fr - 2D array of shape (n,8), since 8 annihilation channels are included in the network. Note br_fr \in [1e-5,1)
-    # def input_preprocessing_DM(self,DM_masses,br_fr,pp):
-    #     # Min-max standardization of DM masses
-    #     m_DM = ((np.log10(DM_masses)+3) - np.log10(5e3)) / (np.log10(5e6)-np.log10(5e3))
-    #     # Replacing zeros by 1e-5
-    #     bf_temp = np.where(br_fr<1e-5,1e-5,br_fr)
-    #     # Normalizing branching fractions
-    #     bf_temp = bf_temp / np.sum(bf_temp,axis=1)[:,None]
-    #     # Processing braching fractions 
-    #     bf = (np.log10(bf_temp) - np.array(self.DM_trafos[1,0])) / (np.array(self.DM_trafos[1,1])- np.array(self.DM_trafos[1,0]))
-    #     # Processing propagation parameters
-    #     theta_prop =  ((pp - np.array(self.DM_trafos[0,0]))/np.array(self.DM_trafos[0,1]))
-    #     return m_DM,bf,theta_prop
-    #     # Outputs processed 1D (m_DM) and 2D (bf,theta_prop)
-
-    
-
-    # sigma_v - (n,) array or scalar float containing cross section values 
-    
-        
-    

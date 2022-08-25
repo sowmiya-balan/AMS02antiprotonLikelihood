@@ -10,7 +10,7 @@ for gpu in tf.config.experimental.list_physical_devices('GPU'):
     tf.config.experimental.set_memory_growth(gpu, True)
 from iminuit import Minuit
 import sys
-print("\033[32m Imported required python modules - gc, numpy, tensorflow, iminuit.Minuit")
+print("\033[32m Imported required python modules - numpy, tensorflow, iminuit.Minuit")
 
 script_directory = os.path.dirname(os.path.realpath(__file__))
 m_p = 0.9382720881604903  # Mass of proton in GeV (938.2720881604903 MeV)
