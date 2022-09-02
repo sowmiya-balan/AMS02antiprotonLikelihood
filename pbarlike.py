@@ -43,20 +43,26 @@ def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
     del_chi2 = DRN.del_chi2(phi_DMCR)
     del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
-    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr[0]}
+    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
     return result
 
 def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False):
     propagation_parameters = np.array(propagation_parameters)
     DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation)
+    # print("phi_CR_LIS",(DRN.phi_CR_LIS).shape)
+    # print("phi_CR",(DRN.phi_CR).shape)
+    # print("chi2_CR_uncorr",(DRN.chi2_CR_uncorr).shape)
+    # print("chi2_CR_corr",(DRN.chi2_CR_corr).shape)
     DRN.preprocessing_DMparams(DM_mass, brfr, sigma_v)
     print('Normalized branching fractions: ',DRN.bf)
     print('\nPropagation model: ',DRN.propagation_model)
     phi_DM_LIS = DRN.LIS_sim()
+    # print("phi_DM_LIS",phi_DM_LIS.shape)
     phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
+    # print("phi_DMCR",phi_DMCR.shape)
     del_chi2 = DRN.del_chi2(phi_DMCR)
     del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
-    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr[0]}
+    result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
     return result
     
 print("\033[37m     Loaded pbarlike 1.0")

@@ -44,10 +44,10 @@ class DRNet:
         # Loading priors
         mins_pp = {'run1' : np.array([1.63, 1.6, 2.38, 2.34, 5000, 0.32, 1.15e28, 0.375, 0, 0, 2]),
                    'DIFF.BRK' : np.array([2.249, 2.194, 3.411e+28, -9.66635e-01, 4.794e-01, -2.000e-01, 3.044e+03, 3.127e-01, 1.217e+0, 0]),
-                   'INJ.BRK+vA': []}# TO DO: add
+                   'INJ.BRK+vA': [1.59786, 1.60102, 4939.44, 0.221776, 2.41369, 2.36049,3.53e+28, 0.301255, -0.171395, 125612, 0, 14.3322]}
         maxs_pp = {'run1' : np.array([1.9, 1.88, 2.45, 2.4, 9500, 0.5, 5.2e28, 0.446, 11, 12.8, 7]),
                    'DIFF.BRK' : np.array([2.37e+00, 2.314e+00, 4.454e+28, -3.677e-01, 6.048e-01, -8.330e-02, 4.928e+03, 5.142e-01, 3.154e+05, 1.447e+01]),
-                   'INJ.BRK+vA': []}# TO DO: add
+                   'INJ.BRK+vA': [1.84643, 1.84721, 8765.77, 0.45543, 2.49947, 2.44248, 5.49E+28, 0.41704, -0.0398135, 413544, 8.61201, 29.206]}
         self.mins_pp = mins_pp[self.propagation_model]
         self.maxs_pp = maxs_pp[self.propagation_model]
         # Loading multinest sample for the corresponding diffusion model
@@ -170,7 +170,7 @@ class DRNet:
 
     def CR_sim(self):  
         # Preprocessing propagation parameters
-        pp = (( self.pp - (self.S_trafos[0])[:11])/(self.S_trafos[1])[:11])
+        pp = ((self.pp - np.array(self.S_trafos[0]))/np.array(self.S_trafos[1]))
         # y_CR - (28,) array of y values predicted by the sNet at different KE per nucleon values in E_drn ; y(E) = log10(E^2.7 phi(E))
         # S_model = tf.keras.models.load_model(self.S_model)
         S_model =tf.keras.models.load_model(self.dep_path + 'S_model.h5')
@@ -199,7 +199,7 @@ class DRNet:
 
     # Calculates chi2 using ams data, covariane matrix and predicted flux
     def chi2_cov(self,phi_pred):
-        return (phi_ams - phi_pred) @ ams_cov.I @ (phi_ams - phi_pred).T
+        return np.diag((phi_ams - phi_pred) @ ams_cov_inv @ (phi_ams - phi_pred).T)
 
     
     # Applying solar modulation to flux predicted at the local interstellar medium
