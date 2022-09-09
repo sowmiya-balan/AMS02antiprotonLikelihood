@@ -16,10 +16,10 @@ def br_fr(inputs, sigma_v=1):
                         for key in inputs.keys()}
     # Template for the dictionary entry - Gambit annihilation channel : DRN annihilation channel
     keys_to_location = {
-                    "u1 ubar_1":DRBF['q qbar'],"u2 ubar_2":DRBF['c cbar'],"u3 ubar_3":DRBF['t tbar'],
-                    "ubar_1 u1":DRBF['q qbar'],"ubar_2 u2":DRBF['c cbar'],"ubar_3 u3":DRBF['t tbar'],
-                    "d1 dbar_1":DRBF['q qbar'],"d2 dbar_2":DRBF['q qbar'],"d3 dbar_3":DRBF['b bbar'],
-                    "dbar_1 d1":DRBF['q qbar'],"dbar_2 d2":DRBF['q qbar'],"dbar_3 d3":DRBF['b bbar'],
+                    "u_1 ubar_1":DRBF['q qbar'],"u_2 ubar_2":DRBF['c cbar'],"u_3 ubar_3":DRBF['t tbar'],
+                    "ubar_1 u_1":DRBF['q qbar'],"ubar_2 u_2":DRBF['c cbar'],"ubar_3 u_3":DRBF['t tbar'],
+                    "d_1 dbar_1":DRBF['q qbar'],"d_2 dbar_2":DRBF['q qbar'],"d_3 dbar_3":DRBF['b bbar'],
+                    "dbar_1 d_1":DRBF['q qbar'],"dbar_2 d_2":DRBF['q qbar'],"dbar_3 d_3":DRBF['b bbar'],
                     "W+ W-":4, "W- W+":4,
                     "Z0 Z0":5, "g g":6, 
                     "h h":7
