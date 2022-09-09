@@ -103,9 +103,9 @@ class DRNet:
             br_fr = br_fr[np.newaxis,:] 
         # Replacing zeros by 1e-5 and renormalizing
         # rf = br_fr/np.sum(br_fr, axis = -1)[:,None] # initial normalization; already done in br_fr function in pbarlike.py
-        masked_array = np.where(rf < 1e-5, 0, 1) # ones for every fs >= 1e-5
+        masked_array = np.where(br_fr < 1e-5, 0, 1) # ones for every fs >= 1e-5
         masked_reversed = np.ones_like(masked_array) - masked_array # ones for every fs < 1e-5
-        masked_rf = masked_array * rf # array with entries only >= 1e-5, else 0
+        masked_rf = masked_array * br_fr # array with entries only >= 1e-5, else 0
         norm = np.sum(masked_rf, axis = -1)
         if norm==0.:
             norm=1
