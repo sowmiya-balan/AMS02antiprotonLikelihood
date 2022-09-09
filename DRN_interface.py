@@ -102,11 +102,14 @@ class DRNet:
         if br_fr.ndim == 1:
             br_fr = br_fr[np.newaxis,:] 
         # Replacing zeros by 1e-5 and renormalizing
-        rf = br_fr/np.sum(br_fr, axis = -1)[:,None] # initial normalization
+        # rf = br_fr/np.sum(br_fr, axis = -1)[:,None] # initial normalization; already done in br_fr function in pbarlike.py
         masked_array = np.where(rf < 1e-5, 0, 1) # ones for every fs >= 1e-5
         masked_reversed = np.ones_like(masked_array) - masked_array # ones for every fs < 1e-5
         masked_rf = masked_array * rf # array with entries only >= 1e-5, else 0
-        scaling = (1-np.sum(masked_reversed, axis = -1)*1e-5)/np.sum(masked_rf, axis = -1) # scaling for each >=1e-5 fs, while keeping relative fractions and normalizations
+        norm = np.sum(masked_rf, axis = -1)
+        if norm==0.:
+            norm=1
+        scaling = (1-np.sum(masked_reversed, axis = -1)*1e-5)/norm # scaling for each >=1e-5 fs, while keeping relative fractions and normalizations
         bf_temp = masked_rf * scaling[:,None] + masked_reversed*1e-5 # scale fs >=1e-5 and set other to 1e-5
         # Processing braching fractions 
         bf = (np.log10(bf_temp) - np.array(self.DM_trafos[1,0])) / (np.array(self.DM_trafos[1,1])- np.array(self.DM_trafos[1,0])) 
