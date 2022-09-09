@@ -50,7 +50,7 @@ phi_in_R = ams_data[:,10] * ams_data[:,13]
 error_R_ams = np.sqrt(ams_data[:,11]**2+ams_data[:,12]**2)*ams_data[:,13]
 
 # Loading ams02 covariance matrix (58,58) for the 7-year antiproton data:
-ams_cov = np.matrix(np.genfromtxt(script_directory+'/dependencies/covariance_pbar_AMS.dat'))
+ams_cov = np.matrix(np.genfromtxt(script_directory+'/dependencies/covariance_pbar_AMS.dat'))[14:,14:]
 ams_cov_inv = ams_cov.I
 
 # R - array with rigidity values in GV; outputs array of E_k in GeV
@@ -71,6 +71,8 @@ phi_ams = np.array(flux_in_Ekin(phi_in_R,R_ams))
 # Error propagation gives the error of flux in E_k as follows:
 # error_ams - (58,) array of error values of flux values measured at E_ams
 error_ams = np.array(flux_in_Ekin(error_R_ams,R_ams))
+# ams_cov = np.diag(error_ams**2)
+# ams_cov_inv = np.matrix(ams_cov).I
 
 # E_drn - (28,) array of KE per nucleon values at which sNet predicts flux values (same values at which training data are given to the sNet)
 E_drn = np.array(np.load(script_directory+'/dependencies/E.npy'))

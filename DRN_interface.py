@@ -75,7 +75,11 @@ class DRNet:
                     print("At least one of the inputs for %s is outside the trained parameter ranges. No output will be given. The default multinest sample will be used for marginalization. " % (self.strings[self.propagation_model])[i])
                     print(np.min(propagation_parameters[:, i]),np.max(propagation_parameters[:, i]))
                     self.pp = self.mnpp
+                    self.marginalization = True
                     break
+                else :
+                    self.pp = propagation_parameters
+                    self.marginalization = False
         else :
             self.pp = propagation_parameters
             self.marginalization = False               
@@ -97,10 +101,13 @@ class DRNet:
         # Converting 1D bf array to 2D array
         if br_fr.ndim == 1:
             br_fr = br_fr[np.newaxis,:] 
-        # Replacing zeros by 1e-5
-        bf_temp = np.where(br_fr<1e-5,1e-5,br_fr)
-        # Normalizing branching fractions
-        bf_temp = bf_temp / np.sum(bf_temp,axis=-1)[:,None]
+        # Replacing zeros by 1e-5 and renormalizing
+        rf = br_fr/np.sum(br_fr, axis = -1)[:,None] # initial normalization
+        masked_array = np.where(rf < 1e-5, 0, 1) # ones for every fs >= 1e-5
+        masked_reversed = np.ones_like(masked_array) - masked_array # ones for every fs < 1e-5
+        masked_rf = masked_array * rf # array with entries only >= 1e-5, else 0
+        scaling = (1-np.sum(masked_reversed, axis = -1)*1e-5)/np.sum(masked_rf, axis = -1) # scaling for each >=1e-5 fs, while keeping relative fractions and normalizations
+        bf_temp = masked_rf * scaling[:,None] + masked_reversed*1e-5 # scale fs >=1e-5 and set other to 1e-5
         # Processing braching fractions 
         bf = (np.log10(bf_temp) - np.array(self.DM_trafos[1,0])) / (np.array(self.DM_trafos[1,1])- np.array(self.DM_trafos[1,0])) 
         bf_r = np.repeat(bf,len(self.pp),axis=0)
@@ -195,19 +202,24 @@ class DRNet:
 
     # Calculates chi2 using ams data, ams errors and predicted flux
     def chi2(self,phi_pred):
-        return np.sum((phi_ams - phi_pred)**2 / error_ams**2,axis = -1)
+        if phi_pred.ndim == 1:
+            return np.sum((phi_ams[14:] - phi_pred[14:])**2 / error_ams[14:]**2,axis = -1)
+        else :
+            return np.sum((phi_ams[14:] - phi_pred[:,14:])**2 / error_ams[14:]**2,axis = -1)
 
     # Calculates chi2 using ams data, covariane matrix and predicted flux
     def chi2_cov(self,phi_pred):
-        return np.diag((phi_ams - phi_pred) @ ams_cov_inv @ (phi_ams - phi_pred).T)
-
+        if phi_pred.ndim == 1:
+            return np.diag((phi_ams[14:] - phi_pred[14:]) @ ams_cov_inv @ (phi_ams[14:] - phi_pred[:,14:]).T)
+        else :
+            return np.diag((phi_ams[14:] - phi_pred[:,14:]) @ ams_cov_inv @ (phi_ams[14:] - phi_pred[:,14:]).T)
     
     # Applying solar modulation to flux predicted at the local interstellar medium
     def solar_mod(self,phi_LIS, V, Z=-1., A=1., m=m_p ):
         # E_LIS_ams - (58,) array of KE per nucleon values at LIS which after solar modulation reduce to E_ams
         E_LIS_ams = E_ams + np.abs(Z)/A * V
         # phi_LIS_interp - (n,58) array of flux values interpolated to the above E values.
-        phi_LIS_interp = (np.interp(E_LIS_ams,E_drn,phi_LIS))
+        phi_LIS_interp = np.exp(np.interp(np.log(E_LIS_ams),np.log(E_drn),np.log(phi_LIS)))
         # phi_earth - (n,58) array of flux values simulated as that which is measured by AMS 02, i.e., flux after solar modulation
         phi_earth = phi_LIS_interp * (E_ams**2 + 2*E_ams*m)/(E_LIS_ams**2 + 2*E_LIS_ams*m)
         return phi_earth
