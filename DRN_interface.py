@@ -4,7 +4,10 @@ from preamble import *
 #%% DRN class
 
 class DRNet:
-    def __init__(self,propagation_parameters,propagation_model,prevent_extrapolation):
+    def __init__(self,propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv):
+        self.cov_inv = cov_inv
+        self.errors = errors
+        self.data = data
         self.pe = prevent_extrapolation
         model_options = ['run1', 'DIFF.BRK', 'INJ.BRK+vA']
         solar_modulation_options = {'run1':self.solar_mod_run1, 'DIFF.BRK':self.solar_mod_brk, 'INJ.BRK+vA':self.solar_mod_brk}
@@ -102,7 +105,7 @@ class DRNet:
         if br_fr.ndim == 1:
             br_fr = br_fr[np.newaxis,:] 
         # Replacing zeros by 1e-5 and renormalizing
-        # rf = br_fr/np.sum(br_fr, axis = -1)[:,None] # initial normalization; already done in br_fr function in pbarlike.py
+        # br_fr = br_fr/np.sum(br_fr, axis = -1)[:,None] # initial normalization; already done in br_fr function in pbarlike.py
         masked_array = np.where(br_fr < 1e-5, 0, 1) # ones for every fs >= 1e-5
         masked_reversed = np.ones_like(masked_array) - masked_array # ones for every fs < 1e-5
         masked_rf = masked_array * br_fr # array with entries only >= 1e-5, else 0
@@ -154,7 +157,15 @@ class DRNet:
         # y_DM_x - (n,40) array of y values predicted by the DMNet for different x values; y(x) = log10(m^3 x phi(E))        
         # DM_model = tf.keras.models.load_model(self.DM_model)
         DM_model = tf.keras.models.load_model(self.dep_path + 'DM_model_x.h5')
+
+        # print('Preprocessed mass:',self.m_DM)
+        # print('Preprocessed branching fractions:',self.bf)
+        # print('Preprocessed prop params for DMNet:',pp)
+
         y_DM_x = DM_model([self.m_DM,self.bf,pp])
+
+        # print('DMNet Ouput:',y_DM_x)
+
         # Releasing memory
         tf.keras.backend.clear_session()
         del DM_model    
@@ -175,22 +186,27 @@ class DRNet:
                 indices.append(j)
         for i in range(len(self.m_DM)):
             phi_DM_LIS[i,indices]  = np.exp(np.interp(np.log(E_drn_allowed), np.log(E_dmnet[i]), np.log(phi_dmnet[i])) )
+        # print('Interpolated DMNet Output:',phi_DM_LIS)
         return phi_DM_LIS
         # Outputs 2D phi_DM_LIS - (n,58) array of flux values interpolated to obtain fluxes at the same KE per nucleon values as in E_drn
 
     def CR_sim(self):  
         # Preprocessing propagation parameters
         pp = ((self.pp - np.array(self.S_trafos[0]))/np.array(self.S_trafos[1]))
+        # print('Preprocessed prop params for SNet:',pp)
         # y_CR - (28,) array of y values predicted by the sNet at different KE per nucleon values in E_drn ; y(E) = log10(E^2.7 phi(E))
         # S_model = tf.keras.models.load_model(self.S_model)
         S_model =tf.keras.models.load_model(self.dep_path + 'S_model.h5')
         y_CR = S_model(pp)
+        # print('SNet Output:',y_CR)
         # Releasing memory
         tf.keras.backend.clear_session()
         del S_model
         gc.collect()
         # phi_CR_LIS - (28,) array of flux values predicted by the sNet at different KE per nucleon values in E_drn
         phi_CR_LIS = 10**(y_CR)/E_drn**2.7
+        # print('E_drn:',E_drn,E_drn.dtype)
+        # print('phi_CR_LIS:',phi_CR_LIS)
         return phi_CR_LIS
         # Outputs phi_CR_LIS - (28,) array of flux values predicted by the sNet at different KE per nucleon values in E_drn
 
@@ -205,17 +221,19 @@ class DRNet:
 
     # Calculates chi2 using ams data, ams errors and predicted flux
     def chi2(self,phi_pred):
+        diff = self.data - phi_pred
         if phi_pred.ndim == 1:
-            return np.sum((phi_ams[14:] - phi_pred[14:])**2 / error_ams[14:]**2,axis = -1)
+            return np.sum((diff[14:])**2 / self.errors[14:]**2,axis = -1)
         else :
-            return np.sum((phi_ams[14:] - phi_pred[:,14:])**2 / error_ams[14:]**2,axis = -1)
+            return np.sum((diff[:,14:])**2 / self.errors[14:]**2,axis = -1)
 
     # Calculates chi2 using ams data, covariane matrix and predicted flux
     def chi2_cov(self,phi_pred):
+        diff = self.data-phi_pred
         if phi_pred.ndim == 1:
-            return np.diag((phi_ams[14:] - phi_pred[14:]) @ ams_cov_inv @ (phi_ams[14:] - phi_pred[:,14:]).T)
+            return np.diag((diff[14:]) @ self.cov_inv @ (diff[14:]).T)
         else :
-            return np.diag((phi_ams[14:] - phi_pred[:,14:]) @ ams_cov_inv @ (phi_ams[14:] - phi_pred[:,14:]).T)
+            return np.diag((diff[:,14:]) @ self.cov_inv @ (diff[:,14:]).T)
     
     # Applying solar modulation to flux predicted at the local interstellar medium
     def solar_mod(self,phi_LIS, V, Z=-1., A=1., m=m_p ):
@@ -318,6 +336,7 @@ class DRNet:
         phi = {'DIFF.BRK': 12, 'INJ.BRK+vA': 14}
         delta_phi_bar = {'DIFF.BRK': 13, 'INJ.BRK+vA': 15}
         V = self.mns[:,phi[self.propagation_model]] + self.mns[:,delta_phi_bar[self.propagation_model]]
+        # print('Solar mod potential:',V)
         if self.marginalization:
             return np.array([self.solar_mod(phi_LIS[i],V[i]) for i in range(len(phi_LIS))])
         else:

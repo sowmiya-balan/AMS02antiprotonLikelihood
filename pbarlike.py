@@ -20,17 +20,17 @@ def br_fr(inputs, sigma_v=1):
                     "ubar_1 u_1":DRBF['q qbar'],"ubar_2 u_2":DRBF['c cbar'],"ubar_3 u_3":DRBF['t tbar'],
                     "d_1 dbar_1":DRBF['q qbar'],"d_2 dbar_2":DRBF['q qbar'],"d_3 dbar_3":DRBF['b bbar'],
                     "dbar_1 d_1":DRBF['q qbar'],"dbar_2 d_2":DRBF['q qbar'],"dbar_3 d_3":DRBF['b bbar'],
-                    "W+ W-":4, "W- W+":4,
-                    "Z0 Z0":5, "g g":6, 
-                    "h h":7
+                    "W+ W-":DRBF['W+ W-'], "W- W+":DRBF['W+ W-'],
+                    "Z0 Z0":DRBF['Z0 Z0'], "g g":DRBF['g g'], 
+                    "h0_1 h0_1":DRBF['h h']
                         }
     for i in keys_to_location.keys() :
         bf[0,keys_to_location[i]] += factorized_bf.get(i,0)
     return bf
 
-def DRN_initialization(propagation_parameters,propagation_model='DIFF.BRK', prevent_extrapolation= False):
+def DRN_initialization(propagation_parameters,propagation_model='DIFF.BRK', prevent_extrapolation= False,data = phi_ams,errors=error_ams,cov_inv = ams_cov_inv):
     propagation_parameters = np.array(propagation_parameters)
-    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation)
+    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv)
     # print('\nPropagation model: ',DRN.propagation_model)
     return DRN
     
@@ -46,20 +46,14 @@ def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
     return result
 
-def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False):
+def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False,data=phi_ams,errors = error_ams,cov_inv = ams_cov_inv):
     propagation_parameters = np.array(propagation_parameters)
-    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation)
-    # print("phi_CR_LIS",(DRN.phi_CR_LIS).shape)
-    # print("phi_CR",(DRN.phi_CR).shape)
-    # print("chi2_CR_uncorr",(DRN.chi2_CR_uncorr).shape)
-    # print("chi2_CR_corr",(DRN.chi2_CR_corr).shape)
+    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv)
     DRN.preprocessing_DMparams(DM_mass, brfr, sigma_v)
-    print('Normalized branching fractions: ',DRN.bf)
-    print('\nPropagation model: ',DRN.propagation_model)
+    # print('Normalized branching fractions: ',DRN.bf)
+    # print('\nPropagation model: ',DRN.propagation_model)
     phi_DM_LIS = DRN.LIS_sim()
-    # print("phi_DM_LIS",phi_DM_LIS.shape)
     phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
-    # print("phi_DMCR",phi_DMCR.shape)
     del_chi2 = DRN.del_chi2(phi_DMCR)
     del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
     result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
