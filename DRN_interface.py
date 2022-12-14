@@ -4,22 +4,27 @@ from preamble import *
 #%% DRN class
 
 class DRNet:
-    def __init__(self,propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv):
+    def __init__(self,propagation_parameters,propagation_model,prevent_extrapolation,data,errors,data_cov,xsection_cov):
         print("Initializing DRN")
-        self.cov_inv = cov_inv
         self.errors = errors
         self.data = data
         self.pe = prevent_extrapolation
         model_options = ['run1', 'DIFF.BRK', 'INJ.BRK+vA']
         solar_modulation_options = {'run1':self.solar_mod_run1, 'DIFF.BRK':self.solar_mod_brk, 'INJ.BRK+vA':self.solar_mod_brk}
         if propagation_model in model_options:
-            print("valid pm")
             self.propagation_model = propagation_model
         else:
             print()
             print('The propagation model "%s" is not provided in this tool. It will be set to default (DIFF.BRK).'%propagation_model)
             self.propagation_model = 'DIFF.BRK'
         self.dep_path = script_directory + '/dependencies/' + self.propagation_model + '/'
+        if xsection_cov and self.propagation_model in ['DIFF.BRK', 'INJ.BRK+vA'] :
+            xsection_cov = np.matrix(np.genfromtxt(self.dep_path+'CovMatrix_AMS02_pbar_CrossSection_'+str(self.propagation_model)+'.txt'))[14:,14:]
+        elif not xsection_cov or self.propagation_model == 'run1' :
+            xsection_cov = np.matrix(np.ones((44,44)))
+        else :
+            pass 
+        self.cov_inv = (data_cov+xsection_cov).I
         self.solar_modulation = solar_modulation_options[self.propagation_model]
         self.load_deps()
         self.load_pp_data()
@@ -65,7 +70,7 @@ class DRNet:
     def preprocessing_prop_params(self, propagation_parameters):
         # Converting propagation parameters to 2D array. Required transformations will be done within simulations (DM_sim, CR_sim)
         if type(propagation_parameters) == list :
-            propagation_parameters = np.array(propagation_parameters)
+            propagation_parameters = np.array(propagation_parameters)[np.newaxis,:]
         if propagation_parameters.ndim == 1:
             propagation_parameters = propagation_parameters[np.newaxis,:]
         # Checking if given propagation parameters are custom or dummy
@@ -372,7 +377,7 @@ class DRNet:
         return phi_DMCR
     
     def del_chi2(self, phi_DMCR):
-        # print('phiDMCR:',phi_DMCR)
+        # print('phiDMCR after solmod:',phi_DMCR)
         del_chi2 = []
         for i in range(len(phi_DMCR)):
             # print('phiDMCRi:',phi_DMCR[i])
@@ -380,7 +385,8 @@ class DRNet:
             # print('chisquares:',chi2_DMCR)
             chi2_diff = np.clip(self.chi2_CR_uncorr - chi2_DMCR,  -500,500)
             # print('chi2_diff:',chi2_diff)
-            del_chi2_t = np.log( 1/len(self.pp_ur) * np.sum(np.exp(chi2_diff/2),axis=-1) )
+            del_chi2_t = -2*np.log( 1/len(self.pp_ur) * np.sum(np.exp(chi2_diff/2),axis=-1) )
+            # print('Len pp:',len(self.pp_ur))
             # print('del_chi2_t:',del_chi2_t)
             del_chi2.append(del_chi2_t)
         return del_chi2
@@ -390,7 +396,7 @@ class DRNet:
         for i in range(len(phi_DMCR)):
             chi2_DMCR = self.chi2_cov(phi_DMCR[i])
             chi2_DM_diff = np.clip(self.chi2_CR_uncorr - chi2_DMCR,  -500,500)
-            delta_chi2_t = np.log(np.sum(np.exp(chi2_DM_diff/2),axis=-1) / self.CR_marginalized_likelihood)
+            delta_chi2_t = -2*np.log(np.sum(np.exp(chi2_DM_diff/2),axis=-1) / self.CR_marginalized_likelihood)
             delta_chi2_cov.append(delta_chi2_t)
         return delta_chi2_cov
 

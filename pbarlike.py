@@ -38,9 +38,9 @@ def br_fr(inputs, sigma_v=1):
 #%% Initializing DRN class, LIS simulation, solar modulation and delta-chi2 calculation
 
 # Delta-chi2 calculation for Gambit; propagation parameters always input as a list in the yaml file; default setting in Gambit yaml file ams.yaml: faulty prop. params that force DRN to perform marginalization over multinest sample 
-def DRN_initialization(propagation_parameters,propagation_model='DIFF.BRK', prevent_extrapolation= False,data = phi_ams,errors=error_ams,cov_inv = ams_cov_inv):
+def DRN_initialization(propagation_parameters,propagation_model='DIFF.BRK', prevent_extrapolation= False,data = phi_ams,errors=error_ams,data_cov=ams_7y_cov,xsection_cov=True):
     # propagation_parameters = np.array(propagation_parameters)
-    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv)
+    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,data_cov,xsection_cov)
     # print('\nPropagation model: ',DRN.propagation_model)
     return DRN
     
@@ -56,9 +56,9 @@ def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
     return result
 
-def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),propagation_model='DIFF.BRK', prevent_extrapolation= False,data=phi_ams,errors = error_ams,cov_inv = ams_cov_inv):
+def py_pbarlike(DM_mass, brfr,sigma_v = 10**(-25.5228),propagation_parameters=np.array([0.0]),propagation_model='DIFF.BRK', prevent_extrapolation= False,data=phi_ams,errors = error_ams,data_cov=ams_7y_cov,xsection_cov=True):
     propagation_parameters = np.array(propagation_parameters)
-    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv)
+    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,data_cov,xsection_cov)
     DRN.preprocessing_DMparams(DM_mass, brfr, sigma_v)
     # print('Normalized branching fractions: ',DRN.bf)
     # print('\nPropagation model: ',DRN.propagation_model)
@@ -69,16 +69,5 @@ def py_pbarlike(DM_mass, brfr,propagation_parameters, sigma_v = 10**(-25.5228),p
     del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
     result = {'uncorrelated' : del_chi2 , 'correlated' : del_chi2_corr}
     return result
-    
-def bbBar_grid(n,sigma_v,propagation_model='DIF.BRK', prevent_extrapolation= False,data=phi_ams,errors = error_ams,cov_inv = ams_cov_inv):
-    DM_mass = np.logspace(np.log10(10),np.log10(5000),n)
-    propagation_parameters = [0.0]
-    brfr = np.array([1.000e-05, 1.000e-05, 9.993e-01, 1.000e-05, 1.000e-05, 1.000e-05,  1.000e-05, 1.000e-05])
-    DRN = DRNet(propagation_parameters,propagation_model,prevent_extrapolation,data,errors,cov_inv)
-    DRN.preprocessing_DMparams(DM_mass, brfr, sigma_v)
-    phi_DM_LIS = DRN.LIS_sim()
-    phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
-    del_chi2 = DRN.del_chi2(phi_DMCR)
-    del_chi2_corr = DRN.del_chi2_corr(phi_DMCR)
-    return del_chi2,del_chi2_corr
+
 print("\033[37m     Loaded pbarlike 1.0")
