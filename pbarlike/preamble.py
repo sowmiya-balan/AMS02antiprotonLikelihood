@@ -17,7 +17,7 @@
      Loads necessary modules; loads and processes data.
 """
 # %% Imports and global variables
-print("\033[32m Loading pbarlike 1.0")
+# print("\033[32m Loading pbarlike 1.0")
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import gc
@@ -26,11 +26,11 @@ import tensorflow as tf
 for gpu in tf.config.experimental.list_physical_devices('GPU'):
     tf.config.experimental.set_memory_growth(gpu, True)
 from iminuit import Minuit
-import sys
 print("\033[32m Imported required python modules - numpy, tensorflow, iminuit.Minuit")
-import banner
- 
-script_directory = os.path.dirname(os.path.realpath(__file__))
+import sys
+from pbarlike import dirpath
+# script_directory = os.path.dirname(os.path.realpath(__file__))
+script_directory = dirpath
 m_p = 0.9382720881604903  # Mass of proton in GeV (938.2720881604903 MeV)
 
 
@@ -72,4 +72,4 @@ error_ams = np.array(flux_in_Ekin(error_R_ams,R_ams))
 
 # E_drn - (28,) array of KE per nucleon values at which sNet predicts flux values (same values at which training data are given to the sNet)
 E_drn = np.array(np.load(script_directory+'/dependencies/E.npy'))
-print("\033[32m Loaded and processed AMS-02 dataset")
+print("\033[32m Loaded and processed AMS-02 dataset and covariance matrices")

@@ -1,0 +1,157 @@
+\hypertarget{classDRN__interface_1_1DRNet}{}\section{D\+R\+N\+\_\+interface.\+D\+R\+Net Class Reference}
+\label{classDRN__interface_1_1DRNet}\index{D\+R\+N\+\_\+interface.\+D\+R\+Net@{D\+R\+N\+\_\+interface.\+D\+R\+Net}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a24305a7981aef4f74f6ae0ae8a316218}\label{classDRN__interface_1_1DRNet_a24305a7981aef4f74f6ae0ae8a316218}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, propagation\+\_\+parameters, propagation\+\_\+model, prevent\+\_\+extrapolation, data, errors, data\+\_\+cov, xsection\+\_\+cov)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a5e2c360fb9a3ee1b2399e85739d06f6e}\label{classDRN__interface_1_1DRNet_a5e2c360fb9a3ee1b2399e85739d06f6e}} 
+def {\bfseries load\+\_\+deps} (self)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_aa9f81928007c8fe2e2311da0f92b7ce7}\label{classDRN__interface_1_1DRNet_aa9f81928007c8fe2e2311da0f92b7ce7}} 
+def {\bfseries load\+\_\+pp\+\_\+data} (self)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a9c23b8aca67ca756aff057626dd0da0e}\label{classDRN__interface_1_1DRNet_a9c23b8aca67ca756aff057626dd0da0e}} 
+def {\bfseries preprocessing\+\_\+prop\+\_\+params} (self, propagation\+\_\+parameters)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a7e6dd2cae3ae172c8f1ee45c5c7cb8a5}\label{classDRN__interface_1_1DRNet_a7e6dd2cae3ae172c8f1ee45c5c7cb8a5}} 
+def {\bfseries preprocessing\+\_\+\+D\+Mparams} (self, D\+M\+\_\+mass, br\+\_\+fr, sigma\+\_\+v)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a8c9f61720b59f809611c2ec1da32cdfe}\label{classDRN__interface_1_1DRNet_a8c9f61720b59f809611c2ec1da32cdfe}} 
+def {\bfseries D\+M\+\_\+sim} (self)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a324de5909cdf94169068dd6785a21d46}\label{classDRN__interface_1_1DRNet_a324de5909cdf94169068dd6785a21d46}} 
+def {\bfseries C\+R\+\_\+sim} (self)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_aa982e1bda26e633320ce88fb8b2a0fca}\label{classDRN__interface_1_1DRNet_aa982e1bda26e633320ce88fb8b2a0fca}} 
+def {\bfseries L\+I\+S\+\_\+sim} (self)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a09dd57f691418fba541bf1edc30d858b}\label{classDRN__interface_1_1DRNet_a09dd57f691418fba541bf1edc30d858b}} 
+def {\bfseries chi2} (self, phi\+\_\+pred)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a252b33d12caaab2b991abf37d87833d8}\label{classDRN__interface_1_1DRNet_a252b33d12caaab2b991abf37d87833d8}} 
+def {\bfseries chi2\+\_\+cov} (self, phi\+\_\+pred)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_adf863a04daea9a3af879ace52e40871f}\label{classDRN__interface_1_1DRNet_adf863a04daea9a3af879ace52e40871f}} 
+def {\bfseries solar\+\_\+mod} (self, phi\+\_\+\+L\+IS, V, Z=-\/1., A=1., m=m\+\_\+p)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a713cb55167cc40e848bcd8b00bfe7113}\label{classDRN__interface_1_1DRNet_a713cb55167cc40e848bcd8b00bfe7113}} 
+def {\bfseries nuisance\+\_\+estimation} (self, phi\+\_\+\+L\+IS)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a96763c6a6446b0f742f61081a6b572d0}\label{classDRN__interface_1_1DRNet_a96763c6a6446b0f742f61081a6b572d0}} 
+def {\bfseries nuisance\+\_\+estimation\+\_\+brk} (self, phi\+\_\+\+L\+IS)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a25ef94080ba163da2130f9e0d91e7740}\label{classDRN__interface_1_1DRNet_a25ef94080ba163da2130f9e0d91e7740}} 
+def {\bfseries solar\+\_\+mod\+\_\+run1} (self, phi\+\_\+\+L\+IS)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a966375be0fb74997dd4e1ec39a64103c}\label{classDRN__interface_1_1DRNet_a966375be0fb74997dd4e1ec39a64103c}} 
+def {\bfseries solar\+\_\+mod\+\_\+brk} (self, phi\+\_\+\+L\+IS)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a239bd6cd2c6ee06cc6a78c6c4b966cad}\label{classDRN__interface_1_1DRNet_a239bd6cd2c6ee06cc6a78c6c4b966cad}} 
+def {\bfseries T\+O\+A\+\_\+sim} (self, phi\+\_\+\+D\+M\+\_\+\+L\+IS)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_ac1010c8e753514144ccf4ab6a95c240c}\label{classDRN__interface_1_1DRNet_ac1010c8e753514144ccf4ab6a95c240c}} 
+def {\bfseries del\+\_\+chi2} (self, phi\+\_\+\+D\+M\+CR)
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a4e203b016ddb9e63ada9eac47a0dfdf2}\label{classDRN__interface_1_1DRNet_a4e203b016ddb9e63ada9eac47a0dfdf2}} 
+def {\bfseries del\+\_\+chi2\+\_\+corr} (self, phi\+\_\+\+D\+M\+CR)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a000c2be4be0050d75af7990ef2fca2c8}\label{classDRN__interface_1_1DRNet_a000c2be4be0050d75af7990ef2fca2c8}} 
+{\bfseries errors}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a670c99a1a4914f960eeebda78adf70ae}\label{classDRN__interface_1_1DRNet_a670c99a1a4914f960eeebda78adf70ae}} 
+{\bfseries data}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_adc7829bc6df0558b6b1a84a04ad1b7f3}\label{classDRN__interface_1_1DRNet_adc7829bc6df0558b6b1a84a04ad1b7f3}} 
+{\bfseries pe}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a0a59ea4b916031441dcd6b7fabb7652b}\label{classDRN__interface_1_1DRNet_a0a59ea4b916031441dcd6b7fabb7652b}} 
+{\bfseries propagation\+\_\+model}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a6a43e8eef78d6c00cb0a557ba6098393}\label{classDRN__interface_1_1DRNet_a6a43e8eef78d6c00cb0a557ba6098393}} 
+{\bfseries dep\+\_\+path}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_affd9b388ce21ce75ff8dc8891807c6be}\label{classDRN__interface_1_1DRNet_affd9b388ce21ce75ff8dc8891807c6be}} 
+{\bfseries cov\+\_\+inv}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a67ab48129b053014934c8d9d6e48bda4}\label{classDRN__interface_1_1DRNet_a67ab48129b053014934c8d9d6e48bda4}} 
+{\bfseries solar\+\_\+modulation}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a733696734558515a63a73848e26208e3}\label{classDRN__interface_1_1DRNet_a733696734558515a63a73848e26208e3}} 
+{\bfseries phi\+\_\+\+C\+R\+\_\+\+L\+IS}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a790aeb6a10cc449500810db6e5debdbe}\label{classDRN__interface_1_1DRNet_a790aeb6a10cc449500810db6e5debdbe}} 
+{\bfseries phi\+\_\+\+CR}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a320de8b6afef2595612a6da67c46d3a2}\label{classDRN__interface_1_1DRNet_a320de8b6afef2595612a6da67c46d3a2}} 
+{\bfseries chi2\+\_\+\+C\+R\+\_\+uncorr}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_aa37378b979464f0e8e710ae348330701}\label{classDRN__interface_1_1DRNet_aa37378b979464f0e8e710ae348330701}} 
+{\bfseries chi2\+\_\+\+C\+R\+\_\+corr}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_acf410b462bd5ca6a31f167b23b89b2d5}\label{classDRN__interface_1_1DRNet_acf410b462bd5ca6a31f167b23b89b2d5}} 
+{\bfseries chi2\+\_\+\+C\+R\+\_\+diff}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_ad810e0d0af1029e95af8148b2d3b8fc4}\label{classDRN__interface_1_1DRNet_ad810e0d0af1029e95af8148b2d3b8fc4}} 
+{\bfseries C\+R\+\_\+marginalized\+\_\+likelihood}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_ab424cb0fd9692d5893ae8784f59b75c8}\label{classDRN__interface_1_1DRNet_ab424cb0fd9692d5893ae8784f59b75c8}} 
+{\bfseries D\+M\+\_\+trafos}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_ab413f90041984f9fd576dcc909e030c3}\label{classDRN__interface_1_1DRNet_ab413f90041984f9fd576dcc909e030c3}} 
+{\bfseries S\+\_\+trafos}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a9d1e33c5fb18bb9bc93ec7e1bcc29484}\label{classDRN__interface_1_1DRNet_a9d1e33c5fb18bb9bc93ec7e1bcc29484}} 
+{\bfseries N\+\_\+pp}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a3f12bd2ccf48f2b33cd372d4a98bef61}\label{classDRN__interface_1_1DRNet_a3f12bd2ccf48f2b33cd372d4a98bef61}} 
+{\bfseries strings}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a697886c335c1ba587eeaa522b7ac90b7}\label{classDRN__interface_1_1DRNet_a697886c335c1ba587eeaa522b7ac90b7}} 
+{\bfseries mins\+\_\+pp}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a401b1f6e6261952b423d8a4eb4ef8e61}\label{classDRN__interface_1_1DRNet_a401b1f6e6261952b423d8a4eb4ef8e61}} 
+{\bfseries maxs\+\_\+pp}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a2064e58c61a2aa75befc8bce2ec16f39}\label{classDRN__interface_1_1DRNet_a2064e58c61a2aa75befc8bce2ec16f39}} 
+{\bfseries mns}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a198dc829d79036098631eb1a1f747d58}\label{classDRN__interface_1_1DRNet_a198dc829d79036098631eb1a1f747d58}} 
+{\bfseries mnpp}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_ad0b41e27dd7d08116e8acac1f785b72b}\label{classDRN__interface_1_1DRNet_ad0b41e27dd7d08116e8acac1f785b72b}} 
+{\bfseries pp}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a733d8503e2de87f8cd6237b7110e0b27}\label{classDRN__interface_1_1DRNet_a733d8503e2de87f8cd6237b7110e0b27}} 
+{\bfseries marginalization}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a47bbde9c65b6b994ad1c9a5bc9fddecc}\label{classDRN__interface_1_1DRNet_a47bbde9c65b6b994ad1c9a5bc9fddecc}} 
+{\bfseries pp\+\_\+ur}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a3773f6527a211f344ea670b546ad32c9}\label{classDRN__interface_1_1DRNet_a3773f6527a211f344ea670b546ad32c9}} 
+{\bfseries D\+M\+\_\+mass}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a670d8afbc85c0f9b1870eeb59a5c6e7b}\label{classDRN__interface_1_1DRNet_a670d8afbc85c0f9b1870eeb59a5c6e7b}} 
+{\bfseries D\+M\+\_\+mass\+\_\+r}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a2d67305e9b95f67cbf094e1c35124715}\label{classDRN__interface_1_1DRNet_a2d67305e9b95f67cbf094e1c35124715}} 
+{\bfseries m\+\_\+\+DM}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_af6bcca724d99c6c517aabf3f88be26a5}\label{classDRN__interface_1_1DRNet_af6bcca724d99c6c517aabf3f88be26a5}} 
+{\bfseries bf}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_a6a4deb0b60b0e847558e03cf814702a2}\label{classDRN__interface_1_1DRNet_a6a4deb0b60b0e847558e03cf814702a2}} 
+{\bfseries stop\+\_\+sim}
+\item 
+\mbox{\Hypertarget{classDRN__interface_1_1DRNet_af7e8b35236eae3e8744f17fdd12b8ace}\label{classDRN__interface_1_1DRNet_af7e8b35236eae3e8744f17fdd12b8ace}} 
+{\bfseries sv}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/users/ttp/sbalan/\+Research/pbarlike/src/D\+R\+N\+\_\+interface.\+py\end{DoxyCompactItemize}

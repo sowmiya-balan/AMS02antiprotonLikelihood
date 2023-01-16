@@ -1,8 +1,6 @@
 #%% Imports
-
-from preamble import *
 from DRN_interface import *
-print("\033[32m Loaded required custom python modules - DRN_interface")
+print("\033[32m Loaded required custom python module - DRN_interface")
 
 #%% C++ branching fractions dictionary from GAMBIT --> DRN branching fractions array
 def br_fr(inputs, sigma_v=1):
@@ -86,3 +84,4 @@ def py_pbarlike(DM_mass, brfr,sigma_v = 10**(-25.5228),propagation_parameters=np
     return result
 
 print("\033[37m Loaded pbarlike 1.0")
+import banner
