@@ -47,14 +47,18 @@ ams_7y_cov = np.matrix(np.genfromtxt(script_directory+'/dependencies/CovMatrix_A
 
 def R_to_Ekin(R,z = -1, A = 1, m = m_p ):
     '''
-    Converts R in GV to kinetic energy per nucleon in GeV: E_k / A = \sqrt{(RZ/A)^2 + m^2}
+    Converts R in GV to kinetic energy per nucleon in GeV: 
+    .. math:: 
+        E_k / A = \sqrt{(RZ/A)^2 + m^2}
     '''
     Z = np.abs(z)
     return np.sqrt(R**2 * (Z/A)**2 + m**2) - m
 
 def flux_in_Ekin(flux_in_R,R,z=-1,A=1,m=m_p):
     '''
-    Converting flux (m-2 sr-1 s-1 GV-1) in R to flux (m-2 sr-1 s-1 GeV-1) in E:  \frac{d \phi}{d R} \frac{d R}{d (E_k/A)} = \frac{d \phi}{d R} \frac{1}{R} (\frac{A}{Z})^2 \sqrt{( \frac{RA}{Z})^2 + m^2}
+    Converting flux (m-2 sr-1 s-1 GV-1) in R to flux (m-2 sr-1 s-1 GeV-1) in E:
+    .. math::
+        \frac{d \phi}{d R} \frac{d R}{d (E_k/A)} = \frac{d \phi}{d R} \frac{1}{R} (\frac{A}{Z})^2 \sqrt{( \frac{RA}{Z})^2 + m^2}
     '''
     Z = np.abs(z)
     return flux_in_R /R * (A/Z)**2 * np.sqrt((R*Z/A)**2 + m**2)
