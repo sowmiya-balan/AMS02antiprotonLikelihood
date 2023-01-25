@@ -5,7 +5,7 @@ from DRN_interface import *
 print("\033[32m Loaded required custom python modules - DRN_interface")
 
 #%% C++ branching fractions dictionary from GAMBIT --> DRN branching fractions array
-def br_fr(inputs, sigma_v=1):
+def br_fr(inputs, sigma_v=1.):
     # To avoid 0/0 during normalization
     if sigma_v==0.:
         sigma_v=1
@@ -42,10 +42,12 @@ def DRN_initialization(propagation_parameters,propagation_model='DIFF.BRK', prev
     return DRN
     
 def py_pbar_logLikes(DRN, DM_mass, brfr, sigma_v = 10**(-25.5228)):
-    if type(brfr)==list and len(br_fr)!=8:
+    if type(brfr)==list and len(brfr)!=8:
         bf = br_fr(brfr,sigma_v)
-    if brfr.ndim >= 1 and brfr.shape[-1]!=8:
+    elif brfr.ndim >= 1 and brfr.shape[-1]!=8:
         bf = br_fr(brfr,sigma_v)
+    else:
+        bf = brfr
     DRN.preprocessing_DMparams(DM_mass, bf, sigma_v)
     phi_DM_LIS = DRN.LIS_sim()
     phi_DMCR = DRN.TOA_sim(phi_DM_LIS)
