@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>drn_interface module &mdash; pbarlike 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="solar_modulation module" href="solar_modulation.html" />
+    <link rel="prev" title="propagation module" href="propagation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pbarlike
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="data.html">data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">propagation module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">drn_interface module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.drn_interface.DRNet"><code class="docutils literal notranslate"><span class="pre">DRNet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.drn_interface.DRNet.DM_LIS_sim"><code class="docutils literal notranslate"><span class="pre">DRNet.DM_LIS_sim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.drn_interface.DRNet.preprocessing_DMparams"><code class="docutils literal notranslate"><span class="pre">DRNet.preprocessing_DMparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.drn_interface.DRNet.preprocessing_prop_params"><code class="docutils literal notranslate"><span class="pre">DRNet.preprocessing_prop_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.drn_interface.create_DIFF_BRK_parameters"><code class="docutils literal notranslate"><span class="pre">create_DIFF_BRK_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.drn_interface.create_INJ_BRK_parameters"><code class="docutils literal notranslate"><span class="pre">create_INJ_BRK_parameters()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solar_modulation.html">solar_modulation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihoods.html">likelihoods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convenience_functions.html">convenience_functions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gambit_interface.html">gambit_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">dependencies</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pbarlike</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">drn_interface module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/drn_interface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="drn-interface-module">
+<h1>drn_interface module<a class="headerlink" href="#drn-interface-module" title="Permalink to this heading"></a></h1>
+<p>Class to simulate primary and secondary antiproton fluxes at the local interstellar region using DarkRayNet.</p>
+<span class="target" id="module-pbarlike.drn_interface"><span id="drn"></span></span><dl class="py class">
+<dt class="sig sig-object py" id="pbarlike.drn_interface.DRNet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pbarlike.drn_interface.</span></span><span class="sig-name descname"><span class="pre">DRNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">propagation_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagation_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prevent_extrapolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.drn_interface.DRNet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains methods that transform the user inputs (propagation parameters,
+DM mass, branching fractions) as required by DMNet (simulates primary antiproton flux) and sNet
+(simulates secondary antiproton flux) and methods that postprocess network ouputs to user usable forms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>propagation_config</strong> (<em>object</em>) -- Object of class <a class="reference internal" href="propagation.html#propagation"><span class="std std-ref">Propagation</span></a></p></li>
+<li><p><strong>propagation_parameters</strong> (<em>list</em><em> or </em><em>array</em>) -- propagation parameters</p></li>
+<li><p><strong>prevent_extrapolation</strong> (<em>bool</em>) -- Whether network should be allowed to predict in untrained parameter regions; default - True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pbarlike.drn_interface.DRNet.DM_LIS_sim">
+<span class="sig-name descname"><span class="pre">DM_LIS_sim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.drn_interface.DRNet.DM_LIS_sim" title="Permalink to this definition"></a></dt>
+<dd><p>Simulates primary and secondary antiproton fluxes at the local interstellar region using DMNet and sNet respectively.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pbarlike.drn_interface.DRNet.preprocessing_DMparams">
+<span class="sig-name descname"><span class="pre">preprocessing_DMparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">DM_mass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">br_fr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.drn_interface.DRNet.preprocessing_DMparams" title="Permalink to this definition"></a></dt>
+<dd><p>Preprocesses DM masses, annihliation cross-sections and branching fractions as required by the DMNet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pbarlike.drn_interface.DRNet.preprocessing_prop_params">
+<span class="sig-name descname"><span class="pre">preprocessing_prop_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">propagation_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.drn_interface.DRNet.preprocessing_prop_params" title="Permalink to this definition"></a></dt>
+<dd><p>Checks validity of given propagation parameters and defaults to multinest sample if conditions are not met.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.drn_interface.create_DIFF_BRK_parameters">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.drn_interface.</span></span><span class="sig-name descname"><span class="pre">create_DIFF_BRK_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_2p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D0xx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4e+28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_h_delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_D0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_D1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.drn_interface.create_DIFF_BRK_parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Gives a set of propagation parameters obtained from a fit of proton and helium fluxes
+to AMS-02 and Voyager data, for the DIFF.BRK model.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.drn_interface.create_INJ_BRK_parameters">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.drn_interface.</span></span><span class="sig-name descname"><span class="pre">create_INJ_BRK_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_1p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_0_inj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_2p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D_0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4e+28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_h_delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_1D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_alfven</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.drn_interface.create_INJ_BRK_parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Gives a set of propagation parameters obtained from a fit of proton and helium fluxes
+to AMS-02 and Voyager data, for the INJ.BRK+vA model.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="propagation.html" class="btn btn-neutral float-left" title="propagation module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="solar_modulation.html" class="btn btn-neutral float-right" title="solar_modulation module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sowmiya Balan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

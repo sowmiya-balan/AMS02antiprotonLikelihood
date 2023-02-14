@@ -1,0 +1,6 @@
+numpy
+tensorflow
+h5py
+iminuit<2
+notebook
+matplotlib

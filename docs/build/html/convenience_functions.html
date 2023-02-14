@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>convenience_functions module &mdash; pbarlike 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="gambit_interface module" href="gambit_interface.html" />
+    <link rel="prev" title="likelihoods module" href="likelihoods.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pbarlike
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="data.html">data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">propagation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drn_interface.html">drn_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solar_modulation.html">solar_modulation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihoods.html">likelihoods module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">convenience_functions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.convenience_functions.loglike_recipe"><code class="docutils literal notranslate"><span class="pre">loglike_recipe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gambit_interface.html">gambit_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">dependencies</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pbarlike</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">convenience_functions module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/convenience_functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="convenience-functions-module">
+<h1>convenience_functions module<a class="headerlink" href="#convenience-functions-module" title="Permalink to this heading"></a></h1>
+<p>Convenience functions to simulate antiproton fluxes using DRN and calculate likelihoods.</p>
+<span class="target" id="module-pbarlike.convenience_functions"></span><dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.convenience_functions.loglike_recipe">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.convenience_functions.</span></span><span class="sig-name descname"><span class="pre">loglike_recipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">DM_mass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagation_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop_model='DIFF.BRK'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Data=&lt;class</span> <span class="pre">'pbarlike.data.ams02Data'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_low_energy=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">production_xsection_cov=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prevent_extrapolation=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.convenience_functions.loglike_recipe" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates difference of marginalized chi-squared value between cases of with and without DM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>DM_mass</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>list</em><em>, or </em><em>1D array</em>) -- dark matter mass in GeV</p></li>
+<li><p><strong>brfr</strong> (<em>list</em><em> or </em><em>array</em>) -- branching fractions to specify the DM annihilation channel; format - [q qbar, c cbar, b bbar, t tbar, W+ W-, Z0 Z0, g g, h h]</p></li>
+<li><p><strong>sigma_v</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>list</em><em> or </em><em>1D array</em>) -- thermally averaged annihilation cross-section in <span class="math notranslate nohighlight">\(cm^3s^{-1}\)</span></p></li>
+<li><p><strong>propagation_parameters</strong> (<em>list</em><em> or </em><em>array</em>) -- propagation parameters (for format and ranges see DRN.load_pp_data())</p></li>
+<li><p><strong>propagation_model</strong> (<em>str</em>) -- &quot;DIFF.BRK&quot; or &quot;INJ.BRK+vA&quot;</p></li>
+<li><p><strong>prevent_extrapolation</strong> (<em>bool</em>) -- decides if DRN should be allowed to predict in parameter regions outside trained region; default-False</p></li>
+<li><p><strong>data</strong> (<em>1D array</em>) -- antiproton flux measurements in :math:(m^2 sr s GeV)^{-1} at energies E; default - 7 year AMS-02 data</p></li>
+<li><p><strong>E</strong> (<em>1D array</em>) -- kinetic energy per nucleon values in GeV at which antiproton measurements are given; default - E_ams</p></li>
+<li><p><strong>errors</strong> (<em>1D array</em>) -- statistical errors at corresponding kinetic energy per nucleon values; default - errors_ams</p></li>
+<li><p><strong>data_cov</strong> (<em>2D array</em>) -- systematic errors at corresponding kinetic energy per nucleon values; default - ams_7y_cov</p></li>
+<li><p><strong>xsection_cov</strong> (<em>bool</em>) -- decides if covariance arising from antiproton production cross-section uncertainties should be included; default - True</p></li>
+<li><p><strong>verbose</strong> -- default - False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>marginalized chi-squared differences using correlated and uncorrelated errors</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="likelihoods.html" class="btn btn-neutral float-left" title="likelihoods module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gambit_interface.html" class="btn btn-neutral float-right" title="gambit_interface module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sowmiya Balan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
