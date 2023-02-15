@@ -1,4 +1,6 @@
 #%% Imports
+import sys, os 
+sys.path.append(os.path.join(os.path.dirname(__file__),".."))
 import numpy as np
 from pbarlike.data import ams02Data
 from pbarlike.propagation import Propagation
