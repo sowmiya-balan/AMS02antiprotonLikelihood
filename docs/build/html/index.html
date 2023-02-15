@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to PBARLIKE&#39;s documentation! &mdash; pbarlike 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="data module" href="data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> pbarlike
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">propagation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drn_interface.html">drn_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solar_modulation.html">solar_modulation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihoods.html">likelihoods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convenience_functions.html">convenience_functions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gambit_interface.html">gambit_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">dependencies</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pbarlike</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Welcome to PBARLIKE's documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-pbarlike-s-documentation">
+<h1>Welcome to PBARLIKE's documentation!<a class="headerlink" href="#welcome-to-pbarlike-s-documentation" title="Permalink to this heading"></a></h1>
+<p>Indirect searches for Dark Matter (DM) look for messengers such as gamma-rays, antiprotons and heavier
+anti-nuclei that can be produced in DM annihilation in the sky. With the release of 7-year data from
+AMS-02 <a class="footnote-reference brackets" href="#id5" id="id1">1</a>, highly accurate antiproton measurements have become available. Traditional analysis with
+CR nuclei involves solving coupled differential equations to solve for CR propagation, and is hence
+copmutationally very heavy. Global fits of antiproton data with other experiments
+are crucial in determining status of different DM models. In the context of global fits, such CR propagation
+with traditional simulators become prohibitively expensive. Thus the speed-up provided by emulators built from deep neural networks
+are crucial for global fits.</p>
+<p><strong>DarkRayNet</strong> <a class="footnote-reference brackets" href="#id6" id="id2">2</a> (DRN), a deep neural network provides significant speed up in predicting propagation of CR nuclei.
+<strong>GAMBIT</strong> <a class="footnote-reference brackets" href="#id8" id="id3">3</a> is an open-source, global fitting framework developed for global fits in Beyond-the-Standard-Model Physics. The code
+<strong>PBARLIKE</strong> <a class="footnote-reference brackets" href="#id10" id="id4">4</a> is an addition to this family of numerical codes, developed for performing convenient and computationally efficient analyses
+for DM searches with antiprotons.</p>
+<p>The code PBARLIKE obtains antiproton flux predictions from DRN, and calculates likelihoods using the recent AMS-02 data. The likelihood is
+marginalized over the nuisance parameters from propagation and solar modulation. It also involves state-of-the-art
+treatment of correlations in data. Most importantly, PBARLIKE includes the <a class="reference external" href="gambit_interfacemodule">gambit_interface</a> module that
+allows access from within GAMBIT to fast AMS-02 antiproton likelihood calculation using DRN.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">propagation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drn_interface.html">drn_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solar_modulation.html">solar_modulation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihoods.html">likelihoods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convenience_functions.html">convenience_functions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gambit_interface.html">gambit_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">dependencies</a></li>
+</ul>
+</div>
+<section id="references">
+<h2>References:<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<p id="id5">[1] AMS Collaboration, M. Aguilar et al., <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0370157320303434?via%3Dihub">The Alpha Magnetic Spectrometer (AMS) on the international space station: Part II — Results from the first seven years</a>, Phys. Rept. 894 (2021) 1–116.</p>
+<p id="id6">[2] F. Kahlhoefer, M. Korsmeier, M. Kr ̈amer, S. Manconi, and K. Nippel, <a class="reference external" href="https://iopscience.iop.org/article/10.1088/1475-7516/2021/12/037">Constraining dark matter annihilation with cosmic ray antiprotons using neural networks</a>, JCAP 12 (2021), no. 12 037, <a class="reference external" href="https://arxiv.org/abs/2107.12395">[2107.12395]</a>.</p>
+<p id="id8">[3] GAMBIT Collaboration, P. Athron et al., <a class="reference external" href="https://link.springer.com/article/10.1140/epjc/s10052-017-5321-8">GAMBIT: The Global and Modular Beyond-the-Standard-Model Inference Tool</a>, Eur. Phys. J. C 77 (2017), no. 11 784, <a class="reference external" href="https://arxiv.org/abs/1705.07908">[1705.07908]</a>. [Addendum: Eur.Phys.J.C 78, 98 (2018)].</p>
+<p id="id10">[4] Add reference.</p>
+<p id="id11">[5] J. Heisig, M. Korsmeier, and M. W. Winkler, <a class="reference external" href="https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.2.043017">Dark matter or correlated errors: Systematics of the AMS-02 antiproton excess</a>, Phys. Rev. Res. 2 (2020), no. 4 043017, <a class="reference external" href="https://arxiv.org/abs/2005.04237">[2005.04237]</a>.</p>
+<div class="admonition-todo admonition" id="id13">
+<p class="admonition-title">Todo</p>
+<p>Add reference for new paper</p>
+</div>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Check validity of MN sample description</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="dependencies.html#id1"><em>original entry</em></a> is located in /users/ttp/sbalan/Research/pbarlike_project/docs/source/dependencies.rst, line 68.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Add reference for new paper</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="#id13"><em>original entry</em></a> is located in /users/ttp/sbalan/Research/pbarlike_project/docs/source/index.rst, line 64.)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="data.html" class="btn btn-neutral float-right" title="data module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sowmiya Balan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

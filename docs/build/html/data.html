@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data module &mdash; pbarlike 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="propagation module" href="propagation.html" />
+    <link rel="prev" title="Welcome to PBARLIKE&#39;s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pbarlike
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">data module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.data.R_to_Ekin"><code class="docutils literal notranslate"><span class="pre">R_to_Ekin()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.data.ams02Data"><code class="docutils literal notranslate"><span class="pre">ams02Data</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.data.ams02Data.pbar_flux"><code class="docutils literal notranslate"><span class="pre">ams02Data.pbar_flux</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.data.ams02Data.energy"><code class="docutils literal notranslate"><span class="pre">ams02Data.energy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.data.ams02Data.errors"><code class="docutils literal notranslate"><span class="pre">ams02Data.errors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pbarlike.data.ams02Data.correlations"><code class="docutils literal notranslate"><span class="pre">ams02Data.correlations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.data.flux_in_Ekin"><code class="docutils literal notranslate"><span class="pre">flux_in_Ekin()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">propagation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drn_interface.html">drn_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solar_modulation.html">solar_modulation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihoods.html">likelihoods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convenience_functions.html">convenience_functions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gambit_interface.html">gambit_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">dependencies</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pbarlike</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">data module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-module">
+<h1>data module<a class="headerlink" href="#data-module" title="Permalink to this heading"></a></h1>
+<p>Module to load and process antiproton data.</p>
+<p>Contains class for AMS-02 7-year antiproton data. Module can be easily extended with additional
+classes for new datasets.</p>
+<span class="target" id="module-pbarlike.data"></span><dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.data.R_to_Ekin">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.data.</span></span><span class="sig-name descname"><span class="pre">R_to_Ekin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9382720881604903</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.data.R_to_Ekin" title="Permalink to this definition"></a></dt>
+<dd><p>Converts R in GV to kinetic energy per nucleon in GeV,</p>
+<div class="math notranslate nohighlight">
+\[E_k / A = \sqrt{(RZ/A)^2 + m^2}\]</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pbarlike.data.ams02Data">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pbarlike.data.</span></span><span class="sig-name descname"><span class="pre">ams02Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_low_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.data.ams02Data" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p id="ams">Class to load and process AMS-02 7-year dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Always add new classes with same attributes for compatibility with rest of the code.</p></li>
+<li><p>Measurements below <span class="math notranslate nohighlight">\(10 \ GeV\)</span> are neglected by default, due to uncertainties
+induced by approximate modeling of solar modulation.</p></li>
+<li><p>AMS-02 data correlations have not been made public by the AMS collaboration. The data correlations
+included here were modeled in <a class="reference internal" href="index.html#id11"><span class="std std-ref">[5]</span></a>.</p></li>
+</ul>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pbarlike.data.ams02Data.pbar_flux">
+<span class="sig-name descname"><span class="pre">pbar_flux</span></span><a class="headerlink" href="#pbarlike.data.ams02Data.pbar_flux" title="Permalink to this definition"></a></dt>
+<dd><p>Antiproton flux values in <span class="math notranslate nohighlight">\((m^2 \ sr \ s \ GeV)^{-1}\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pbarlike.data.ams02Data.energy">
+<span class="sig-name descname"><span class="pre">energy</span></span><a class="headerlink" href="#pbarlike.data.ams02Data.energy" title="Permalink to this definition"></a></dt>
+<dd><p><span class="math notranslate nohighlight">\(GeV\)</span> energies at which antiproton flux values are measured.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pbarlike.data.ams02Data.errors">
+<span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#pbarlike.data.ams02Data.errors" title="Permalink to this definition"></a></dt>
+<dd><p>Uncorrelated data errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pbarlike.data.ams02Data.correlations">
+<span class="sig-name descname"><span class="pre">correlations</span></span><a class="headerlink" href="#pbarlike.data.ams02Data.correlations" title="Permalink to this definition"></a></dt>
+<dd><p>Data correlations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>2D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>include_low_energy</strong> (<em>bool</em>) -- Whether or not to include low energy region affected by
+solar modulation; default - False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.data.flux_in_Ekin">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.data.</span></span><span class="sig-name descname"><span class="pre">flux_in_Ekin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flux_in_R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9382720881604903</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.data.flux_in_Ekin" title="Permalink to this definition"></a></dt>
+<dd><p>Converting flux <span class="math notranslate nohighlight">\((m^2 \ sr \ s \ GV)^{-1}\)</span> in R to flux <span class="math notranslate nohighlight">\((m^2 \ sr \ s \ GeV)^{-1}\)</span> in E,</p>
+<div class="math notranslate nohighlight">
+\[\frac{d \phi}{d R} \frac{d R}{d (E_k/A)} = \frac{d \phi}{d R} \frac{1}{R} (\frac{A}{Z})^2 \sqrt{( \frac{RA}{Z})^2 + m^2}\]</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PBARLIKE&#39;s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="propagation.html" class="btn btn-neutral float-right" title="propagation module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sowmiya Balan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

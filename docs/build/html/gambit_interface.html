@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="Python" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gambit_interface module &mdash; pbarlike 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dependencies" href="dependencies.html" />
+    <link rel="prev" title="convenience_functions module" href="convenience_functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pbarlike
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="data.html">data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">propagation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drn_interface.html">drn_interface module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solar_modulation.html">solar_modulation module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihoods.html">likelihoods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convenience_functions.html">convenience_functions module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gambit_interface module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.gambit_interface.DRN_initialization"><code class="docutils literal notranslate"><span class="pre">DRN_initialization()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.gambit_interface.br_fr"><code class="docutils literal notranslate"><span class="pre">br_fr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pbarlike.gambit_interface.py_pbar_logLikes"><code class="docutils literal notranslate"><span class="pre">py_pbar_logLikes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">dependencies</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pbarlike</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">gambit_interface module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gambit_interface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gambit-interface-module">
+<h1>gambit_interface module<a class="headerlink" href="#gambit-interface-module" title="Permalink to this heading"></a></h1>
+<p>Module containing helper functions for interface with GAMBIT.</p>
+<span class="target" id="module-pbarlike.gambit_interface"></span><dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.gambit_interface.DRN_initialization">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.gambit_interface.</span></span><span class="sig-name descname"><span class="pre">DRN_initialization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">propagation_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DIFF.BRK'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prevent_extrapolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_low_energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">production_xsection_cov</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.gambit_interface.DRN_initialization" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes DRNet, calculates secondary antiproton flux for the given propagation model for
+the entire multinest sample and initializes likelihoods for AMS-02 dataset; used at scan-level initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>propagation_parameters</strong> (<em>array</em>) -- Usually dummy input from GAMBIT initialization file to make DRN default to multinest sample.</p></li>
+<li><p><strong>prop_model</strong> (<em>str</em>) -- &quot;DIFF.BRK&quot; or &quot;INJ.BRK&quot;; default - &quot;DIFF.BRK&quot;</p></li>
+<li><p><strong>prevent_extrapolation</strong> (<em>bool</em>) -- decides if DRN should be allowed to predict in parameter regions outside trained region; default-False</p></li>
+<li><p><strong>include_low_energy</strong> (<em>bool</em>) -- Whether or not to include low energy region affected by
+solar modulation; default - False.</p></li>
+<li><p><strong>production_xsection_cov</strong> (<em>bool</em>) -- decides if covariance arising from antiproton production cross-section uncertainties should be included; default - True</p></li>
+<li><p><strong>verbose</strong> -- default - False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>drn,sol_mod,loglike_ratios</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>objects</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>GAMBIT currently uses pbarlike to obtain AMS-02 antiproton likelihoods by marginalizing over
+multinest sample.</p></li>
+<li><p>Propagation parameters and propagation model are set in the GAMBIT initialization file.</p></li>
+<li><p>The default choice is to marginalize over the multinest sample by setting faulty propagation
+parameters in the GAMBIT initialization file.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.gambit_interface.br_fr">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.gambit_interface.</span></span><span class="sig-name descname"><span class="pre">br_fr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">branching_fractions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.gambit_interface.br_fr" title="Permalink to this definition"></a></dt>
+<dd><p>Recasts dictionary of key-value pairs of channels and branching fractions obtained from GAMBIT to
+format accepted by DarkRayNet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>branching_fractions</strong> (<em>dictionary</em>) -- Dictionary containing branching fractions for different channels obtained from gambit</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>branching fraction of channels accepted by DarkRayNet</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pbarlike.gambit_interface.py_pbar_logLikes">
+<span class="sig-prename descclassname"><span class="pre">pbarlike.gambit_interface.</span></span><span class="sig-name descname"><span class="pre">py_pbar_logLikes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sol_mod</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loglike_ratios</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DM_mass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brfr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.000544002443094e-26</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbarlike.gambit_interface.py_pbar_logLikes" title="Permalink to this definition"></a></dt>
+<dd><p>Used at every point in GAMBIT scan to obtain AMS-02 antiproton likelihood for antiproton production
+from DM annihilation and secondary origin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>drn</strong> (<em>object</em>) -- Object of class <a class="reference internal" href="drn_interface.html#drn"><span class="std std-ref">DRNet</span></a></p></li>
+<li><p><strong>sol_mod</strong> (<em>object</em>) -- Eg. <a class="reference internal" href="solar_modulation.html#ffapprox"><span class="std std-ref">Force field approximation</span></a></p></li>
+<li><p><strong>loglike_ratios</strong> (<em>object</em>) -- Object of class <a class="reference internal" href="likelihoods.html#loglikeratios"><span class="std std-ref">LogLikeRatios</span></a></p></li>
+<li><p><strong>DM_mass</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>list</em><em>, or </em><em>1D array</em>) -- dark matter mass in GeV</p></li>
+<li><p><strong>brfr</strong> (<em>list</em><em> or </em><em>array</em>) -- branching fractions to specify the DM annihilation channel; format - [q qbar, c cbar, b bbar, t tbar, W+ W-, Z0 Z0, g g, h h]</p></li>
+<li><p><strong>sigma_v</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>list</em><em> or </em><em>1D array</em>) -- thermally averaged annihilation cross-section in <span class="math notranslate nohighlight">\(cm^3s^{-1}\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>key-value pairs of log-likelihood ratios with correlated and uncorrelated errors.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="convenience_functions.html" class="btn btn-neutral float-left" title="convenience_functions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dependencies.html" class="btn btn-neutral float-right" title="dependencies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sowmiya Balan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
