@@ -87,9 +87,9 @@ def DRN_initialization(propagation_parameters,prop_model='DIFF.BRK',prevent_extr
     sol_mod = ForceFieldApprox(data,propagation_config,drn,verbose)
     chi_squares = LogLikes(data,propagation_config,verbose)
     loglike_ratios = LogLikeRatios(drn,chi_squares,sol_mod,verbose)
-    return drn,sol_mod,loglike_ratios
+    return [drn,sol_mod,loglike_ratios]
     
-def py_pbar_logLikes(drn, sol_mod, loglike_ratios, DM_mass, brfr, sigma_v = 10**(-25.5228)):
+def py_pbar_logLikes(obj_list, DM_mass, brfr, sigma_v = 10**(-25.5228)):
     """
     Used at every point in GAMBIT scan to obtain AMS-02 antiproton likelihood for antiproton production 
     from DM annihilation and secondary origin.
@@ -106,6 +106,9 @@ def py_pbar_logLikes(drn, sol_mod, loglike_ratios, DM_mass, brfr, sigma_v = 10**
         dictionary: key-value pairs of log-likelihood ratios with correlated and uncorrelated errors.
         
     """
+    drn = obj_list[0]
+    sol_mod = obj_list[1]
+    loglike_ratios = obj_list[2]
     bf = br_fr(brfr,sigma_v)
     drn.preprocessing_DMparams(DM_mass, bf, sigma_v)
     phi_DM_LIS = drn.DM_LIS_sim()
