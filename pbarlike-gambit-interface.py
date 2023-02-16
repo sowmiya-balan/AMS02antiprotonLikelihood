@@ -81,6 +81,7 @@ def DRN_initialization(propagation_parameters,prop_model='DIFF.BRK',prevent_extr
         - The default choice is to marginalize over the multinest sample by setting faulty propagation
           parameters in the GAMBIT initialization file.
     """
+    from pbarlike import banner
     data = ams02Data(include_low_energy)
     propagation_config = Propagation(prop_model, production_xsection_cov, include_low_energy)
     drn = DRNet(propagation_config,propagation_parameters,prevent_extrapolation,verbose)
