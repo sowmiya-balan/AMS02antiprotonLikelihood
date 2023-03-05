@@ -6,16 +6,16 @@ dependencies
 - ``E.npy``: Energies at which sNet makes anitproton flux predictions.
 
 - ``CovMatrix_AMS02_pbar_7y.txt``: Data correlations in AMS-02 antiproton data in the same energy
-  bins as the antiproton flux measurements, as modeled in :ref:`5 <5>`.
+  bins as the antiproton flux measurements, as modeled in :ref:`[5] <5>`.
 
 - ``<propagation_model>/DM_model_x.h5``: DMNet for ``<propagation_model>``
 
 - ``<propagation_model>/S_model.h5``: sNet for ``<propagation_model>``
 
-- ``<propagation_model>/CovMatrix_AMS02_pbar_CrossSection.txt``: Covariance matrix from antiproton production cross-section uncertainties as described in section 3.1 of :ref:`4 <4>`.
+- ``<propagation_model>/CovMatrix_AMS02_pbar_CrossSection.txt``: Covariance matrix from antiproton production cross-section uncertainties as described in section 3.1 of :ref:`[4] <4>`.
 
 - ``<propagation_model>/multinest_sample.dat``: 
-        Posterior sample of propagation parameters from fit to AMS-02 and Voyager data, see section 3.2 of :ref:`4 <4>`. For description of CR parameters, refer DRN `documentation <https://github.com/kathrinnp/DarkRayNet>`_.
+        Posterior sample of propagation parameters from fit to AMS-02 and Voyager data, see section 3.2 of :ref:`[4] <4>`. For description of CR parameters, refer DRN `documentation <https://github.com/kathrinnp/DarkRayNet>`_.
         
         DIFF.BRK:
 
