@@ -35,7 +35,6 @@ allows access from within GAMBIT to fast AMS-02 antiproton likelihood calculatio
    solar_modulation.rst
    likelihoods.rst
    convenience_functions.rst
-   gambit_interface.rst
    dependencies.rst
 
 References:

@@ -24,7 +24,6 @@ class ForceFieldApprox:
             propagation_config (object): Object of class :ref:`Propagation <propagation>`
             drn (object): Object of class :ref:`DRNet <drn>`
         """
-        print("\n Initializing DRN ...")
         self.verbose = verbose
         self.E = data.energy
         self.E_drn = drn.E_drn
