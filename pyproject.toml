@@ -14,7 +14,8 @@ requires-python = ">=3.7"
 dependencies = [
   "numpy",
   "tensorflow",
-  "iminuit<2"
+  "iminuit<2",
+  "h5py"
 ]
 
 classifiers = [
