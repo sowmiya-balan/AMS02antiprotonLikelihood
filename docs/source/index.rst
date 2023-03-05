@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to PBARLIKE's documentation!
+Welcome to **pbarlike**'s documentation!
 ====================================
 
 Indirect searches for Dark Matter (DM) look for messengers such as gamma-rays, antiprotons and heavier 
@@ -17,12 +17,12 @@ are crucial for global fits.
 
 **DarkRayNet** [2]_ (DRN), a deep neural network provides significant speed up in predicting propagation of CR nuclei. 
 **GAMBIT** [3]_ is an open-source, global fitting framework developed for global fits in Beyond-the-Standard-Model Physics. The code 
-**PBARLIKE** [4]_ is an addition to this family of numerical codes, developed for performing convenient and computationally efficient analyses 
+**pbarlike** [4]_ is an addition to this family of numerical codes, developed for performing convenient and computationally efficient analyses 
 for DM searches with antiprotons. 
 
 The code PBARLIKE obtains antiproton flux predictions from DRN, and calculates likelihoods using the recent AMS-02 data. The likelihood is
 marginalized over the nuisance parameters from propagation and solar modulation. It also involves state-of-the-art
-treatment of correlations in data. Most importantly, PBARLIKE includes the `gambit_interface <gambit\_interface module>`_ module that
+treatment of correlations in data (modeled following [5]_). Most importantly, PBARLIKE includes the `gambit_interface <gambit\_interface module>`_ module that
 allows access from within GAMBIT to fast AMS-02 antiproton likelihood calculation using DRN.
 
 .. toctree::
@@ -63,5 +63,3 @@ References:
 .. todo::
 
    Add reference for new paper
-
-.. todolist::

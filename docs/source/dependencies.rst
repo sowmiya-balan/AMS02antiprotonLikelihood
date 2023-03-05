@@ -6,7 +6,7 @@ dependencies
 - ``E.npy``: Energies at which sNet makes anitproton flux predictions.
 
 - ``CovMatrix_AMS02_pbar_7y.txt``: Data correlations in AMS-02 antiproton data in the same energy
-  bins as the antiproton flux measurements, as modeled in :ref:`5 <5>`
+  bins as the antiproton flux measurements, as modeled in :ref:`5 <5>`.
 
 - ``<propagation_model>/DM_model_x.h5``: DMNet for ``<propagation_model>``
 
@@ -64,7 +64,3 @@ dependencies
         16            A_p                      Overall normalization
         17            Abd_He                   Helium 4 isotopic abundance
         ============  =======================  ======================================
-
-.. todo::
-
-  Check validity of MN sample description
